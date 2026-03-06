@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prof. Dr. Alkan Yıldırım – Perinatoloji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #1e3a2f;
+    --green-700: #2e5c47;
+    --green-600: #3d7560;
+    --green-400: #6aa68e;
+    --green-200: #b8d8cd;
+    --green-100: #e8f3ef;
+    --gold:       #b8935a;
+    --gold-light: #d4ae7a;
+    --cream:      #f8f5f0;
+    --cream-dark: #ece7de;
+    --white:      #ffffff;
+    --text:       #1a1a1a;
+    --text-mid:   #444444;
+    --text-light: #7a7a7a;
+    --sidebar-w:  280px;
+    --radius:     6px;
+    --shadow-sm:  0 1px 4px rgba(0,0,0,0.08);
+    --shadow-md:  0 4px 16px rgba(0,0,0,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* ─── Sidebar ─── */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--green-900);
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s;
+    border-right: 1px solid rgba(0,0,0,0.2);
+  }
+  #sidebar::-webkit-scrollbar { width: 3px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--green-600); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 2rem 1.5rem 1.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .sidebar-header:hover { background: rgba(255,255,255,0.04); }
+  .sidebar-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+  }
+  .sidebar-subtitle {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.3rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-section { padding: 0.5rem 0; }
+  .nav-section-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0.75rem 1.5rem 0.3rem;
+    opacity: 0.7;
+  }
+  .nav-link {
+    display: block;
+    padding: 0.42rem 1.5rem;
+    font-size: 0.81rem;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    line-height: 1.45;
+  }
+  .nav-link:hover {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.95);
+    border-left-color: var(--gold);
+    padding-left: 1.75rem;
+  }
+  .nav-link.active {
+    background: rgba(255,255,255,0.09);
+    color: var(--white);
+    border-left-color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  /* ─── Main ─── */
+  #main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── HOME ─── */
+  #page-home { min-height: 100vh; display: none; flex-direction: column; }
+  #page-home.active { display: flex; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(120deg, var(--green-900) 0%, var(--green-700) 55%, var(--green-600) 100%);
+    color: var(--white);
+    padding: 4.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: 200px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { flex: 1; min-width: 0; position: relative; z-index: 1; }
+  .hero-photo {
+    flex-shrink: 0;
+    width: clamp(180px, 18vw, 240px);
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--radius);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.12);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .hero-title-gold { color: var(--gold-light); }
+  .hero-cta {
+    margin-top: 2.25rem;
+    display: flex; gap: 0.9rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 0.7rem 1.75rem;
+    border-radius: var(--radius);
+    font-size: 0.83rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.7rem 1.75rem;
+    border-radius: var(--radius);
+    font-size: 0.83rem;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); }
+
+  /* Bio */
+  .home-bio {
+    padding: 3.5rem 4rem;
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .bio-inner { max-width: 760px; }
+  .section-label {
+    font-size: 0.63rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .home-bio h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--green-900);
+    margin-bottom: 1.25rem;
+  }
+  .home-bio p {
+    font-size: 0.93rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+  }
+  .timeline {
+    margin-top: 2rem;
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+  .timeline-item { display: flex; align-items: flex-start; gap: 0.9rem; }
+  .timeline-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    color: var(--green-600);
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+  .timeline-text { font-size: 0.8rem; color: var(--text-light); line-height: 1.65; }
+
+  /* Topics */
+  .home-topics {
+    padding: 3.5rem 4rem;
+    background: var(--cream);
+  }
+  .home-topics h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+  .home-topics > p { font-size: 0.88rem; color: var(--text-light); margin-bottom: 2rem; }
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.5rem;
+  }
+  .topic-card {
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    border-left: 3px solid var(--green-400);
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-size: 0.81rem;
+    color: var(--text-mid);
+    line-height: 1.4;
+    box-shadow: var(--shadow-sm);
+  }
+  .topic-card:hover {
+    border-left-color: var(--green-700);
+    background: var(--green-100);
+    transform: translateX(3px);
+    color: var(--green-900);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Contact */
+  .home-contact {
+    background: var(--green-900);
+    color: var(--white);
+    padding: 3.5rem 4rem;
+    margin-top: auto;
+  }
+  .home-contact h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .contact-block {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    border-top: 2px solid var(--gold);
+  }
+  .contact-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 0.9rem;
+    font-weight: 500;
+  }
+  .contact-block p { font-size: 0.85rem; color: rgba(255,255,255,0.72); line-height: 1.9; }
+  .contact-block a { color: var(--gold-light); text-decoration: none; transition: opacity 0.15s; }
+  .contact-block a:hover { opacity: 0.8; }
+
+  /* ─── ARTICLE ─── */
+  #page-article { display: none; flex-direction: column; min-height: 100vh; }
+  #page-article.active { display: flex; }
+
+  .article-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-dark);
+    padding: 2.75rem 4rem 2.25rem;
+  }
+  .article-breadcrumb {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-600);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.15s;
+  }
+  .article-breadcrumb:hover { color: var(--green-900); }
+  .article-breadcrumb::before { content: '←'; font-size: 0.9rem; }
+  .article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    color: var(--green-900);
+    line-height: 1.15;
+  }
+  .article-meta {
+    margin-top: 1rem;
+    font-size: 0.76rem;
+    color: var(--text-light);
+    display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;
+  }
+
+  .article-body {
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 840px;
+    line-height: 1.85;
+  }
+  .article-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    color: var(--green-900);
+    margin: 2.25rem 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--cream-dark);
+    font-weight: 500;
+  }
+  .article-body h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--green-700);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .article-body p {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+    line-height: 1.85;
+  }
+  .article-body a {
+    color: var(--green-700);
+    text-decoration: none;
+    border-bottom: 1px solid var(--green-200);
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .article-body a:hover { color: var(--green-900); border-bottom-color: var(--green-700); }
+  .article-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.75rem auto;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  .article-body ul, .article-body ol { margin: 0.5rem 0 1rem 1.5rem; }
+  .article-body li { font-size: 0.92rem; margin-bottom: 0.4rem; color: var(--text-mid); }
+  .article-body .pending {
+    background: var(--cream-dark);
+    border-left: 4px solid var(--green-400);
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius);
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  .article-signature {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cream-dark);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--green-600);
+    font-style: italic;
+  }
+  .article-appt-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    background: var(--green-700);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius);
+    font-size: 0.83rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    box-shadow: var(--shadow-sm);
+  }
+  .article-appt-btn:hover { background: var(--green-900); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .article-nav {
+    padding: 1.5rem 4rem 2rem;
+    background: var(--white);
+    border-top: 1px solid var(--cream-dark);
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .article-nav-btn {
+    background: var(--cream);
+    border: 1px solid var(--cream-dark);
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius);
+    font-size: 0.81rem;
+    cursor: pointer;
+    color: var(--text-mid);
+    transition: all 0.18s;
+  }
+  .article-nav-btn:hover { background: var(--green-100); color: var(--green-900); border-color: var(--green-200); }
+
+  /* ─── CONTACT PAGE ─── */
+  #page-contact { display: none; min-height: 100vh; padding: 3rem 4rem; }
+  #page-contact.active { display: block; }
+  #page-contact h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--green-900);
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+  }
+
+  /* ─── Mobile ─── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 200;
+    background: var(--green-900);
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-md);
+  }
+  @media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      transform: translateX(-100%);
+    }
+    #sidebar.open { transform: translateX(0); }
+    .menu-toggle { display: block; }
+    .hero, .home-bio, .home-topics, .home-contact { padding: 2.5rem 1.5rem; }
+    .hero { flex-direction: column; gap: 2rem; }
+    .hero-photo { width: 100%; max-width: 200px; aspect-ratio: 3/4; align-self: center; }
+    .article-header, .article-body, .article-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+    #page-contact { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header" onclick="showPage('home')">
+    <div class="sidebar-logo">Prof. Dr. Alkan Yıldırım</div>
+    <div class="sidebar-subtitle">Perinatoloji Uzmanı</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-link" onclick="showPage('home')">🏠 Ana Sayfa</div>
+    <div class="nav-link" onclick="showPage('contact')">📍 Muayene &amp; İrtibat</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Fetal Anomaliler</div>
+    <div class="nav-link" onclick="showArticle('akrania')">Akrania</div>
+    <div class="nav-link" onclick="showArticle('anal-artezi')">Anal Atrezi</div>
+    <div class="nav-link" onclick="showArticle('asit')">Asit</div>
+    <div class="nav-link" onclick="showArticle('duodenal-artezi')">Duodenal Atrezi</div>
+    <div class="nav-link" onclick="showArticle('ektopik-bobrek')">Ektopik Böbrek</div>
+    <div class="nav-link" onclick="showArticle('fetal-anomaliler')">Fetal Anomaliler (Genel)</div>
+    <div class="nav-link" onclick="showArticle('fetal-kalpte-hiperekojen-odak')">Fetal Kalpte Hiperekojen Odak</div>
+    <div class="nav-link" onclick="showArticle('gastrosizis')">Gastroşizis</div>
+    <div class="nav-link" onclick="showArticle('gebelik-kolestazi')">Gebelik Kolestazı</div>
+    <div class="nav-link" onclick="showArticle('gebelikte-ilac-kullanimi')">Gebelikte İlaç Kullanımı</div>
+    <div class="nav-link" onclick="showArticle('hafif-pelviektazi')">Hafif Pelviektazi</div>
+    <div class="nav-link" onclick="showArticle('hafif-ventrikulomegali')">Hafif Ventrikülomegali</div>
+    <div class="nav-link" onclick="showArticle('hidronefroz')">Hidronefroz</div>
+    <div class="nav-link" onclick="showArticle('hidrops')">Hidrops</div>
+    <div class="nav-link" onclick="showArticle('hidrosel')">Hidrosel</div>
+    <div class="nav-link" onclick="showArticle('hiperekojen-barsak')">Hiperekojen Barsak</div>
+    <div class="nav-link" onclick="showArticle('hipospadias')">Hipospadias</div>
+    <div class="nav-link" onclick="showArticle('karacigerde-kalsifikasyon')">Karaciğerde Kalsifikasyon</div>
+    <div class="nav-link" onclick="showArticle('kistik-adenomatoid-malformasyon')">Kistik Adenomatoid Malformasyon</div>
+    <div class="nav-link" onclick="showArticle('kistik-higroma')">Kistik Higroma</div>
+    <div class="nav-link" onclick="showArticle('kondiloma-akuminata')">Kondiloma Akuminata</div>
+    <div class="nav-link" onclick="showArticle('koroid-pleksus-kisti')">Koroid Pleksus Kisti</div>
+    <div class="nav-link" onclick="showArticle('mega-sisterna-magna')">Mega Sisterna Magna</div>
+    <div class="nav-link" onclick="showArticle('mekonyum-peritonitis')">Mekonyum Peritonitis</div>
+    <div class="nav-link" onclick="showArticle('multkistik-displastik-bobrek')">Multikistik Displastik Böbrek</div>
+    <div class="nav-link" onclick="showArticle('myom')">Myom</div>
+    <div class="nav-link" onclick="showArticle('oligahidramnios')">Oligohidramnios</div>
+    <div class="nav-link" onclick="showArticle('omfalosel')">Omfalosel</div>
+    <div class="nav-link" onclick="showArticle('over-kisti')">Over Kisti</div>
+    <div class="nav-link" onclick="showArticle('plasenta-previa')">Plasenta Previa</div>
+    <div class="nav-link" onclick="showArticle('posterior-uretral-valv-sendromu')">Posterior Uretral Valv Sendromu</div>
+    <div class="nav-link" onclick="showArticle('renal-agenezi')">Renal Agenezi</div>
+    <div class="nav-link" onclick="showArticle('servikal-yetmezlik')">Servikal Yetmezlik</div>
+    <div class="nav-link" onclick="showArticle('spina-bifida')">Spina Bifida</div>
+    <div class="nav-link" onclick="showArticle('tek-umblikal-arter')">Tek Umblikal Arter</div>
+    <div class="nav-link" onclick="showArticle('ureterosel')">Üreterosel</div>
+    <div class="nav-link" onclick="showArticle('uterin-arter-ve-doppler')">Uterin Arter ve Doppler</div>
+    <div class="nav-link" onclick="showArticle('yarik-dudak-yarik-damak')">Yarık Dudak, Yarık Damak</div>
+    <div class="nav-link" onclick="showArticle('ozofagus-artezisi')">Özofagus Atrezisi</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Prenatal Tanı</div>
+    <div class="nav-link" onclick="showArticle('amniosentez')">Amniosentez</div>
+    <div class="nav-link" onclick="showArticle('kordosentez')">Kordosentez (KS)</div>
+    <div class="nav-link" onclick="showArticle('koryon-villus-biopsisi')">Koryon Villus Biopsisi (CVS)</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">İstanbul Tıp Fakültesi · Perinatoloji</div>
+        <h1>Prof. Dr. <span class="hero-title-gold">Alkan Yıldırım</span></h1>
+<div class="hero-cta">
+          <button class="btn-primary" onclick="showPage('contact')">Randevu Al</button>
+          <button class="btn-outline" onclick="showArticle('fetal-anomaliler')">Fetal Anomaliler</button>
+        </div>
+      </div>
+      <img src="images/alkanyildirim.jpg" alt="Prof. Dr. Alkan Yıldırım" class="hero-photo">
+    </div>
+
+    <div class="home-bio">
+      <div class="bio-inner">
+        <div class="section-label">Özgeçmiş</div>
+        <h2>Akademik Kariyer</h2>
+        <p>Prof. Dr. Alkan Yıldırım, İstanbul Tıp Fakültesi'nden 1981 yılında mezun olmuş ve kariyerini perinatoloji alanında sürdürerek 1999 yılında profesör unvanı almıştır.</p>
+        <p>40 yılı aşkın klinik deneyimi ile fetal anomaliler, prenatal tanı yöntemleri ve riskli gebelik yönetimi konularında kapsamlı hizmet sunmaktadır.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1981</div>
+            <div class="timeline-text">İstanbul Tıp Fakültesi<br>mezuniyeti</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1999</div>
+            <div class="timeline-text">Profesörlük unvanı,<br>Perinatoloji Uzmanı</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-topics">
+      <div class="section-label">Bilgi Merkezi</div>
+      <h2>Konu Başlıkları</h2>
+      <p>Perinatoloji ve fetal anomaliler hakkında detaylı bilgi edinmek için bir konu seçin.</p>
+      <div class="topics-grid" id="topics-grid"></div>
+    </div>
+
+    <div class="home-contact">
+      <h2>Muayene &amp; İrtibat</h2>
+      <div class="contact-grid">
+        <div class="contact-block">
+          <h3>Özel Muayenehane</h3>
+          <p>Bahçelievler<br><br>
+          Tel: <a href="tel:02125530106">(0212) 553-01-06</a><br>
+          Tel: <a href="tel:02125069494">(0212) 506-94-94</a><br>
+          GSM: <a href="tel:05322926656">(0532) 292-66-56</a><br>
+          E-posta: <a href="mailto:dr.alkanyildirim@gmail.com">dr.alkanyildirim@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE -->
+  <div id="page-article" class="page">
+    <div class="article-header">
+      <div class="article-breadcrumb" onclick="showPage('home')">Ana Sayfa</div>
+      <h1 class="article-title" id="article-title">Başlık</h1>
+      <div class="article-meta">
+        <span>Prof. Dr. Alkan Yıldırım</span>
+        <span>Perinatoloji</span>
+      </div>
+    </div>
+    <div class="article-body" id="article-body"></div>
+    <div class="article-nav" id="article-nav"></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="page-contact" class="page">
+    <h1>Muayene &amp; İrtibat</h1>
+    <div class="contact-grid">
+      <div class="contact-block" style="background:var(--white);border:1px solid var(--cream-dark);">
+        <h3 style="color:var(--sage-dark)">Özel Muayenehane – Bahçelievler</h3>
+        <p style="color:var(--text-light)">Tel: <a href="tel:02125530106">(0212) 553-01-06</a><br>
+        Tel: <a href="tel:02125069494">(0212) 506-94-94</a><br>
+        GSM: <a href="tel:05322926656">(0532) 292-66-56</a><br>
+        E-posta: <a href="mailto:dr.alkanyildirim@gmail.com">dr.alkanyildirim@gmail.com</a></p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ─── Article Data ───────────────────────────────────────────────────────────
+const articles = {
+
+"akrania": {
+  title: "Akrania",
+  content: `
+<h2>Tanım</h2>
+<p>Akalvaria da denilen akrani, gözlerin üstünden itibaren kafa kemiklerinin oluşmamasıdır. Kafa kemiklerinin oluşmaması sonucu beyin dokusu dışarıya doğru serbest halde bulunur. Görülme sıklığı 1/1000 doğumdur. Ölümle sonlanan bir malformasyondur.</p>
+<h2>Tanı</h2>
+<p>Tanı ultrasonografi ile kolaylıkla konabilir. Göz seviyesinin üstünden itibaren kafa kemikleri görülmez, buna karşılık kafatası tabanı oluşmuştur. Beyin dokusu fetusun gözlerinin üst-arka bölümünde serbest halde bulunur. Beyin aşınmış görünümdedir.</p>
+<p>Eğer akranianın sebebi olarak amniotik band varlığı söz konusuysa damak dudak yarığı görülebilir. Polihidramnios genellikle tabloya eşlik eder.</p>
+<p>Akranianın ayırıcı tanısında anensefali, ensefalosel, amniotik band sendromu, body-stalk anomalileri ve osteogenezis imperfekta akla gelmelidir.</p>
+<h2>Prognoz ve Tedavi</h2>
+<p>Fetusun ölümüyle sonuçlanan bir malformasyondur. Fetusun yaşama şansı yoktur. Bu nedenle tanı konduğunda gebeliğin sonlandırılması önerilmelidir. Terminasyon öncesinde genetik danışma yapılmalıdır.</p>
+<p>Eğer akranianın sebebi amniotik band ise sonraki gebelikte tekrarlama riski yoktur. Ancak sebep amniotik band değilse sonraki gebeliklerde görülebilme riski %3 olarak bildirilmiştir.</p>
+`},
+
+"amniosentez": {
+  title: "Amniosentez",
+  content: `
+<h2>Tanım</h2>
+<p>Amniosentez, fetusun etrafındaki amnios sıvısından özel iğneler ile bir miktar alınmasıdır. Çeşitli amaçlarla yapılabilir. En fazla yapılma nedeni prenatal tanıdır. Prenatal tanı amaçlı amniosentez gebeliğin 15-20 haftaları arasında yapılabilir. İdeal dönem 16-20. gebelik haftalarıdır.</p>
+<h2>Teknik</h2>
+<p>Amniosentez yapmak için 20 veya 22 numara spinal iğneler kullanılır. Steril şartlar altında, ultrasonografi klavuzluğunda, fetusun ve plasentanın olmadığı ve amniotik sıvının çok görüldüğü bir lokalizasyondan intrauterin boşluğa girilir. Önce 1-2 ml'lik sıvı çekilir ve atılır — bu ilk örnekte gebeye ait doku parçacıkları olabilir. Daha sonra genellikle 18-20 cc sıvı test için alınır.</p>
+<h2>Komplikasyonlar</h2>
+<p>Amniosentez sonrası fetal kayıp oranı değişik çalışmalarda 1/200 ile 1/300 arasında bildirilmiştir. Küçük komplikasyonlar (amniotik sıvı gelmesi, lekeler halinde vajinal kanama) görülme sıklığı %1'den daha azdır. İntrauterin infeksiyon olan koryoamnionit görülme sıklığı 1/1000'den azdır.</p>
+<h2>Erken Amniosentez</h2>
+<p>Amniosentezin gebeliğin 11-14. haftaları arasında yapılmasıdır. Bu dönemde fetal kayıp oranı %2.5 sıklığında görülebilir; ayrıca fetal clubfoot gibi ayak anomalileri de görülebileceği bildirilmiştir. Bu nedenle erken amniosentez genellikle önerilmemekte, bu dönemde koryon villus biopsisi (CVS) tercih edilmektedir.</p>
+`},
+
+"anal-artezi": {
+  title: "Anal Atrezi",
+  content: `
+<h2>Tanım</h2>
+<p>Anorektal atrezi veya anus imperforatus olarak da isimlendirilebilen anal atrezi, anüsteki açıklığın olmamasıdır. Anüs açık olmadığı için fetus ve doğum sonrası yenidoğan dışkı yapamaz. Anal atrezi, atrezi seviyesinin levator bağının üstünde veya altında olmasına göre yüksek lezyonlu veya alçak lezyonlu olmak üzere iki şekilde görülebilir. Anal atrezinin görülme sıklığı yaklaşık 1/2000 doğum olarak bildirilmiştir.</p>
+<h2>Tanı</h2>
+<p>Gebelikte anal atrezi tanısı nadiren konabilir. Ultrasonografik olarak pelviste veya karnın alt tarafında genişlemiş kalınbarsak görülebilir. Tanı konan vakaların tamamına yakını üçüncü trimesterdeki gebelerdir.</p>
+<p>Anorektal atrezide genişlemiş kalın barsak ansları içinde çoğu kere kalsife mekonyum parçacıkları görülür. En sık rastlananı genişlemiş barsakla mesane arasında fistül oluşumudur. Amniotik sıvı volümü genellikle normaldir.</p>
+<p>Anal atrezi ayrıca diğer birçok anomali ile birlikte görülebilir: omurga anomalileri, kalp anomalileri, trakeo-özofageal fistül, böbrek anomalileri ve kol-bacaklara ait anomaliler.</p>
+<h2>Prognoz ve Tedavi</h2>
+<p>Anal atrezide prognoz daha çok ilave anomalilerin var olup olmamasına bağlıdır. İlave anomali yoksa prognoz genellikle iyidir. Tedavi sonrası tekrarlama riski %3-%4 arasında değişir.</p>
+<p>Tanı konan vakalarda fetal kromozom tayini için amniosentez veya kordosentez yapılmalıdır. Sadece anal atrezi veya düşük lezyonlu atrezilerde ameliyat ile düzeltme hemen yapılırken yüksek lezyonlu olgularda düzeltme ile birlikte kolostomi yapılır.</p>
+`},
+
+"asit": {
+  title: "Asit",
+  content: `
+<h2>Tanım</h2>
+<p>Karın boşluğunda serbest halde sıvı bulunmasıdır. Genellikle fetal hidrops ile birlikte görülür. Fetal hidropsta asit dışında hidrotoraks, plevral efüzyon, perikardial efüzyon, genel ödem ve plasentomegali görülebilir.</p>
+<p>Fetal hidrops dışında da asit genellikle ek bir organ anomalisine veya patolojisine bağlı olarak ortaya çıkabilir: ürogenital sistem anomalileri, sindirim sistemi anomalileri, karaciğer anomalileri, kalp ve damar anomalileri, infeksiyonlar (CMV, toksoplazma, sifiliz, parvo virüs, suçiçeği), metabolik depo hastalıkları.</p>
+<img src="images/asit_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Tanı</h2>
+<p>Asit tanısı ultrasonografik değerlendirme ile kolaylıkla konabilir. Asit tanısı koyulan vakalarda hidrops bulguları ile diğer organlara ait anomaliler dikkatlice değerlendirilmelidir.</p>
+<h2>Prognoz ve Tedavi</h2>
+<p>Prognoz doğal olarak hidropsun ve ek organ anomalilerinin olup olmamasına bağlıdır. Eğer hidrops varsa, belirtilerin ortaya çıktığı gebelik haftası önemlidir. Gebelik haftası ne kadar erkense, prognoz o kadar kötüdür. Genellikle 24. gebelik haftasından önce tanı konulan olgularda fetusun yaşama şansı yok denecek kadar azdır.</p>
+<p>Asitin sebebini anlamak amacıyla TORCH serolojisi, amniosentez veya kordosentez, fetal ekokardiogram ve tanı amaçlı parasentez yapılabilir.</p>
+`},
+
+"duodenal-artezi": {
+  title: "Duodenal Atrezi",
+  content: `
+<h2>Tanım</h2>
+<p>Duodenum, incebarsağın mideden sonra başlayan ilk bölümüdür ve halk arasında onikiparmak barsağı olarak da bilinir. Duodenal atrezide barsaktan pasaj (geçiş) olmaz veya azalmıştır. Görülme sıklığı 3/10.000 doğum olarak bildirilmiştir.</p>
+<p>Duodenal atrezili olguların yaklaşık 1/3'ünde Trizomi-21 görülür. Buna ek olarak olguların %50-%70'lik bölümünde ek anomalilere rastlanır: omurga anomalileri, iskelet sistemi anomalileri, annular pankreas, özofagus atrezisi, kalp anomalileri, ürogenital sistem anomalileri.</p>
+<h2>Tanı</h2>
+<p>Ultrasonografide tıkanık barsağın mideye bitişik olan bölümü ile midede sıvı birikimine bağlı "double bubble" (çift balon) adı verilen görüntü oluşur. Bu görüntü genellikle 20. gebelik haftasından sonra görüntülenebilir. Amniotik sıvı miktarında polihidramnios denilen artış olur.</p>
+<h2>Takip ve Prognoz</h2>
+<p>Bütün gebelere genetik danışma verilmelidir. Tüm olgularda amniosentez veya kordosentez ile fetal karyotip yapılmalıdır. Ek anomali yoksa iyi merkezlerde cerrahinin başarısı %95'lere çıkabilmektedir. Yenidoğanın ölüm oranı %15-%40 arasında bildirilmiştir.</p>
+`},
+
+"ektopik-bobrek": {
+  title: "Ektopik Böbrek",
+  content: `
+<h2>Tanım</h2>
+<p>Fetusun böbreği, renal fossa denilen normal bulunması gereken yerin dışındadır. Böbrek en sık (%55) pelvis boşluğunda bulunur. Görülme sıklığı 1/1200 gebeliktir.</p>
+<h3>Pelvik Böbrek</h3>
+<p>Böbreğin pelvis boşluğu içinde bulunduğu duruma verilen addır. Pelvik böbrek tanısı koyarken, tek taraflı renal ageneziden ayırt edilmelidir. Pelvik böbrek, zaman zaman kafa içi yapılar, iskelet sistemi, kardiovasküler sistem, sindirim sistemi ve genital sistem anomalileri ile bir arada olabilir. Başka anomalinin olmadığı izole pelvik böbrekte, prognoz son derece iyidir.</p>
+<h3>Karşı Taraf Ektopik Böbrek</h3>
+<p>Böbrek normal yerinde olmayıp, diğer taraftaki böbreğe bitişiktir. Görülme sıklığı erkeklerde daha fazla olmak üzere 1/7000 olarak bildirilmiştir. Bu böbrek anomalisi zaman zaman diğer anomalilerle (özellikle omurga anomalileri, hidronefroz) birlikte görülebilir.</p>
+<h2>Prognoz</h2>
+<p>Eğer anomali izole ise prognoz genellikle iyidir. Doğum sonrası dönemde yüksek vesikoureterik reflü riskinden dolayı bebek takibe alınmalıdır.</p>
+`},
+
+"fetal-anomaliler": {
+  title: "Fetal Anomaliler",
+  content: `
+<p>Fetal anomali, fetusun anatomisindeki şekil bozukluklarıdır. Fetusun bütün sistemlerinde görülebilir. Tek bir anomali olabildiği gibi, aynı sistemde veya farklı sistemlerde birçok anomali de bulunabilir.</p>
+<h2>Sistemsel Dağılım</h2>
+<h3>Merkezi Sinir Sistemi</h3>
+<p><a href="#" onclick="showArticle('spina-bifida');return false;">Spina Bifida</a>, <a href="#" onclick="showArticle('akrania');return false;">Akrania</a>, <a href="#" onclick="showArticle('hafif-ventrikulomegali');return false;">Hafif Ventrikülomegali</a>, <a href="#" onclick="showArticle('mega-sisterna-magna');return false;">Mega Sisterna Magna</a>, <a href="#" onclick="showArticle('koroid-pleksus-kisti');return false;">Koroid Pleksus Kisti</a></p>
+<h3>Boyun ve Yüz</h3>
+<p><a href="#" onclick="showArticle('kistik-higroma');return false;">Kistik Higroma</a>, <a href="#" onclick="showArticle('yarik-dudak-yarik-damak');return false;">Yarık Dudak / Yarık Damak</a></p>
+<h3>Kalp</h3>
+<p><a href="#" onclick="showArticle('fetal-kalpte-hiperekojen-odak');return false;">Fetal Kalpte Hiperekojen Odak</a></p>
+<h3>Sindirim Sistemi</h3>
+<p><a href="#" onclick="showArticle('anal-artezi');return false;">Anal Atrezi</a>, <a href="#" onclick="showArticle('duodenal-artezi');return false;">Duodenal Atrezi</a>, <a href="#" onclick="showArticle('hiperekojen-barsak');return false;">Hiperekojen Barsak</a>, <a href="#" onclick="showArticle('mekonyum-peritonitis');return false;">Mekonyum Peritonitis</a>, <a href="#" onclick="showArticle('karacigerde-kalsifikasyon');return false;">Karaciğerde Kalsifikasyon</a>, <a href="#" onclick="showArticle('ozofagus-artezisi');return false;">Özofagus Atrezisi</a></p>
+<h3>Solunum Sistemi</h3>
+<p><a href="#" onclick="showArticle('kistik-adenomatoid-malformasyon');return false;">Kistik Adenomatoid Malformasyon</a></p>
+<h3>Plasenta ve Kordon</h3>
+<p><a href="#" onclick="showArticle('plasenta-previa');return false;">Plasenta Previa</a>, <a href="#" onclick="showArticle('tek-umblikal-arter');return false;">Tek Umblikal Arter</a></p>
+<h3>Karın Duvarı ve Karın Boşluğu</h3>
+<p><a href="#" onclick="showArticle('asit');return false;">Asit</a>, <a href="#" onclick="showArticle('hidrops');return false;">Hidrops</a>, <a href="#" onclick="showArticle('gastrosizis');return false;">Gastroşizis</a>, <a href="#" onclick="showArticle('over-kisti');return false;">Over Kisti</a>, <a href="#" onclick="showArticle('omfalosel');return false;">Omfalosel</a></p>
+<h3>Ürogenital Sistem</h3>
+<p><a href="#" onclick="showArticle('hafif-pelviektazi');return false;">Hafif Pelviektazi</a>, <a href="#" onclick="showArticle('ureterosel');return false;">Üreterosel</a>, <a href="#" onclick="showArticle('hipospadias');return false;">Hipospadias</a>, <a href="#" onclick="showArticle('hidronefroz');return false;">Hidronefroz</a>, <a href="#" onclick="showArticle('hidrosel');return false;">Hidrosel</a>, <a href="#" onclick="showArticle('multkistik-displastik-bobrek');return false;">Multikistik Displastik Böbrek</a>, <a href="#" onclick="showArticle('posterior-uretral-valv-sendromu');return false;">Posterior Uretral Valv Sendromu</a>, <a href="#" onclick="showArticle('renal-agenezi');return false;">Renal Agenezi</a>, <a href="#" onclick="showArticle('ektopik-bobrek');return false;">Ektopik Böbrek</a></p>
+`},
+
+"fetal-kalpte-hiperekojen-odak": {
+  title: "Fetal Kalpte Hiperekojen Odak",
+  content: `
+<h2>Tanım</h2>
+<p>Fetal kalpte, kalbin papiller kasının ekojenitesindeki artma sonucu oluşan durumdur. Ultrasonografide kalbin içinde parlak beyaz odak şeklinde görüntü ile tanı konur. Kalbin sol ventrikülünde çok daha sık görülür. Genellikle çapı 3 mm'den daha küçüktür.</p>
+<h2>Tanı ve Klinik Önemi</h2>
+<p>Tanı ultrasonografi ile kolaylıkla konabilir. Sol ventrikülde görülme sıklığı sağ ventriküle göre 4 kat daha fazladır. İkinci trimesterdeki fetuslarda görülme sıklığı yaklaşık %3-4'tür.</p>
+<p>Trizomi-21 (Down sendromu) olgularında %18, Trizomi-13 olgularında ise %39 sıklıkla görülür. Bu nedenle kalpte hiperekojen odak tanısı konduğunda ek anomali olup olmadığı dikkatlice aranmalıdır. Eğer kromozomal anomali düşündüren başka bir ultrasonografi bulgusu tespit edilirse amniosentez veya kordosentez ile kromozom analizi gerekir.</p>
+<h2>Prognoz</h2>
+<p>Fetusta hiperekojen odak dışında ek anomali görülmezse prognoz iyidir. Kromozom anomalisi olmadığı takdirde, saptanan hiperekojen odak oluşumunun fetusta sorun oluşturmadığı söylenebilir.</p>
+`},
+
+"gastrosizis": {
+  title: "Gastroşizis",
+  content: `
+<h2>Tanım</h2>
+<p>Fetusun karın duvarında, umbilikus (göbek) yakınında defekt söz konusudur. Bu defekt hemen hemen daima umbilikusun sağ tarafında yer alır. Fetusun barsakları bu defektten dışarı çıkarlar. Gastroşiziste barsakların üstünü örten membran bulunmaz; barsaklar amniotik sıvı içinde serbest olarak yüzerler. Görülme sıklığı yaklaşık 1/3000 doğumdur.</p>
+<p>Yirmi yaş altı çok genç gebelerde yirmibeş yaş üstü gebelere göre 5-6 kat daha sık rastlanır. Gastroşizis kromozomlarla ilişkili değildir, dolayısıyla amniosentez, kordosentez veya CVS gibi girişimler gerekli değildir.</p>
+
+<img src="images/gastrosizis_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/gastrosizis_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Tanı</h2>
+<p>Ultrasonografi ile tanı koymak çok zor değildir. Batın duvarındaki defektten çıkan ve serbest halde yüzen ince barsakların görülmesi tanı koydurur. Gastroşizisi omfaloselden ayırmak için barsakların üstünü örten bir membranın olmadığını görmek gerekir.</p>
+<h2>Prognoz ve Gebeliğin Yönetimi</h2>
+<p>Günümüzde doğum sonrası cerrahi operasyon yapılan gastroşizis olgularında ölüm oranı %10'un altındadır. Gastroşizisli gebelerde doğum mutlaka yeterli yoğun bakım hizmetinin verilebileceği, yenidoğan cerrahi imkânlarının bulunduğu bir merkezde yapılmalıdır. Gastroşizislilerde sezaryenle doğumu önermek yanlış olmaz.</p>
+<p>Gastroşizisli bebek doğuran gebelerde bu durumun tekrarlama riski %3.5 olarak bildirilmiştir.</p>
+`},
+
+"gebelik-kolestazi": {
+  title: "Gebelik Kolestazı",
+  content: `
+<h2>Tanım</h2>
+<p>İntrahepatik kolestaz, gebeliğin yol açtığı ve doğumla beraber düzelebilen bir patolojidir. Şiddetli kaşıntı ve sarılıkla birlikte görülebilir. Görülme sıklığı 1/500 – 1/1000 gebe olarak bildirilmiştir. Genellikle gebeliğin son döneminde ortaya çıkar.</p>
+<p>Karaciğer safra asitlerini normalde safra yolu ile atar. Oysa kolestazlı hastalarda safra yolu ile bu atılım gerçekleşmez ve dolayısıyla safra asitleri kan plazmasında artar. Gebelik kolestazının amnios sıvısının mekonyumlu olma ihtimalini ve erken doğum riskini artırabileceği ileri sürülmüştür.</p>
+<h2>Ayırıcı Tanı</h2>
+<p>Gebelik kolestazı düşünülen bütün gebelerde preeklampsi ve HELLP sendromu düşünülmeli ve ayırıcı tanı yapılmalıdır.</p>
+<h2>Tedavi</h2>
+<p>Asıl şikayet kaşıntının oluşturduğu rahatsızlıktır. Bu amaçla oral antihistaminikler, kolestiramin, ursodeoksikolik asit ve deksametazon gibi ilaçların yararlı olabileceği öne sürülmüştür.</p>
+`},
+
+"gebelikte-ilac-kullanimi": {
+  title: "Gebelikte İlaç Kullanımı",
+  content: `
+<p>Tüm yenidoğanların yaklaşık %3'lük bölümünde büyük ya da küçük anomali görülür. Bu anomalilerin %70'lik bölümünde etyolojik neden bilinmemektedir. Doğum sonrası tespit edilen anomalilerin yaklaşık %10'una teratojen ajanların neden olduğu tespit edilmiştir. İlaçlar bu anomalilerin yaklaşık %1-2'lik bölümünden sorumlu tutulmuştur.</p>
+<h2>Gebelik Dönemleri ve Teratojenisite</h2>
+<p>Teratojen ajanların etkilerine göre gebelik 3 döneme ayrılır:</p>
+<p><strong>Preimplantasyon dönemi (0-31. gün):</strong> "Ya hep ya hiç" kuralı geçerlidir. Ya gebelik ürünü ölür ya da hiçbir şekilde etkilenmez.</p>
+<p><strong>Organogenez dönemi (31-70. gün):</strong> Teratojen ajanların etkilerine en açık olunan dönemdir. Dokuların, organların ve sistemlerin oluşumu bu sürede başlamakta ve büyük ölçüde tamamlanmaktadır.</p>
+<p><strong>Fetal dönem (71. günden doğuma):</strong> Organogenez büyük ölçüde tamamlandığı için genellikle büyüme gelişme gerilikleri ve fonksiyon bozuklukları ön plana geçer.</p>
+<h2>FDA Sınıflaması</h2>
+<p><strong>A Grubu:</strong> İnsanlar ve hayvanlarla yapılan kontrollü çalışmalarda teratojen etkilerine rastlanmayan ilaçlar. Sayıları çok azdır.</p>
+<p><strong>B Grubu:</strong> Hayvan deneylerinde fetal risk göstermeyen ancak insanlarla ilgili çalışma olmayan ilaçlar. Penisilinler örnek olarak gösterilebilir.</p>
+<p><strong>C Grubu:</strong> Hayvan çalışmalarında risk artışı görülen ancak insan çalışması olmayan ilaçlar. Kar-zarar bilançosu dikkate alınarak etkili minimal dozda kullanılabilir.</p>
+<p><strong>D Grubu:</strong> Fetal riski artırdığı kanıtlanmıştır, ancak ilacın potansiyel yararı fetal riskinden daha fazladır. Karbamezepin ve fenitoin örnek olarak gösterilebilir.</p>
+<p><strong>X Grubu:</strong> Fetal riski artırdığı kesin olarak kanıtlanmıştır. Hiçbir şekilde gebelikte kullanılmamalıdır. İsotretinoin (akne tedavisinde) bu gruba örnek olarak gösterilebilir.</p>
+<img src="images/gebelikte-ilac-kullanimi_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+`},
+
+"hafif-pelviektazi": {
+  title: "Hafif Pelviektazi",
+  content: `
+<p>Hafif pelviektazi, piyelektazi veya geçici hidronefroz olarak da adlandırılabilir. Fetusun idrarının dolması ile böbrek pelvisinin genişlemesidir. Ultrasonografide fetal böbrek ön-arka çapı ikinci trimesterde 4 mm'den, 3. trimesterde ise 7 mm'den büyük ölçülür.</p>
+
+<img src="images/hafif-pelviektazi_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Prenatal Tanı</h2>
+<p>Genellikle 3 mm'den daha küçük pelvis çapları normal gebeliği gösterir. Pelvis çapının 10 mm'den fazla olduğu durumlar hafif pelviektazi olmaktan çıkar ve patolojik olarak değerlendirilir.</p>
+<h2>Klinik Önemi</h2>
+<p>İzole hafif pelviektazi Trizomi-21 (Down Sendromu) için minör markerdir ve Trizomi-21 görülme sıklığını yaklaşık 1.6 kat artırabilir. Hafif pelviektazinin iki minör markerle veya major bir anomali ile birlikte bulunması halinde CVS, amniosentez veya kordosentez ile kromozom analizi yapılması önerilir.</p>
+<p>Hafif pelviektazi görülen bütün gebeliklerin %1,7'sinde kromozom anomalisi görülürken, izole hafif pelviektazi olgularında bu risk % 0.46 olarak bildirilmiştir.</p>
+<p>Hafif pelviektazinin erkek fetuslarda kız fetuslara göre 2 kat daha fazla görüldüğü bilinmektedir. Rekürens oranı bir sonraki gebelikteki fetusta 6.1 kat artar.</p>
+<h2>Takip</h2>
+<p>Pelvis çapı 4-7 mm arasındaysa olguların %80'i doğumdan önce normale döner. Pelvis çapının 7 mm'den büyük olduğu olgularda daha sık takip gerekir.</p>
+`},
+
+"hafif-ventrikulomegali": {
+  title: "Hafif Ventrikülomegali",
+  content: `
+<h2>Tanım</h2>
+<p>Borderline ventrikülomegali de denen hafif ventrikülomegali (HV), lateral ventrikül atriumunun genişleyerek 10-12 mm arasında ölçülmesi durumudur. Aksiel planda lateral ventrikül atriumunun 10 mm'den küçük bulunması normal kabul edilmektedir. Ortalama atrium genişliği 7.6 mm'dir.</p>
+<img src="images/hafif-ventrikulomegali_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Tanı</h2>
+<p>Gebeliğin ikinci veya üçüncü trimesterinde ultrasonografi ile lateral ventrikül atrium ölçümünde 10-12 mm'lik değerle karşılaşılması tanı koydurur. Tanı konan olguların %30'unda normale dönüş olurken bir bölümünde lateral ventriküldeki genişleme artabilir.</p>
+<h2>Etyoloji</h2>
+<p>Hafif ventrikülomegalinin sebebi çoğunlukla (%90) bilinmez. Gebenin CMV gibi infeksiyonları zaman zaman HV'ye neden olabilir. Hafif ventrikülomegali olgularının yaklaşık %4'lük bölümünden kromozom anomalileri sorumlu tutulmuştur (büyük bölümünü Trizomi-21 oluşturur). Erkek fetuslarda dişi fetuslara göre 3 kat daha fazla görülür.</p>
+<h2>Prognoz</h2>
+<p>İzole (HV'den başka anomalisi bulunmayan) olguların %9'unda kötü prognozla karşılaşılabilir. Hafif ventrikülomegali tanısı konarak doğan bebekler en az 6 yaşın sonuna kadar belli aralıklarla izlenmelidir.</p>
+`},
+
+"hidronefroz": {
+  title: "Hidronefroz",
+  content: `
+<h2>Tanım</h2>
+<p>Üriner sistemdeki obstrüksiyon sonucu böbrek pelvis ve kaliksinin idrar ile dolarak genişlemesidir. Görülme sıklığı 5/1000 doğumdur. Erkek fetuslarda rastlanma oranı dişi fetuslara göre 4 kat daha fazladır. Prenatal dönemde tanı konan fetal böbrek anomalilerinin yaklaşık %70'lik bölümünü hidronefrozlar oluşturur.</p>
+<p>Olguların %70'lik bölümü tek taraflıdır ve bunların büyük kısmını böbrek pelvisi ile üreter bileşkesindeki obstrüksiyon oluşturur. Diğer bir hidronefroz sebebi olan vesikoureterik reflü ise özellikle erkek fetuslarda görülür.</p>
+<img src="images/hidronefroz_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/hidronefroz_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/hidronefroz_3.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Tanı</h2>
+<p>Prenatal tanı ultrasonografi ile konabilir. Hidronefroz tanısı koyarken böbreğin hangi bölümlerinin etkilendiğine bakarak derecelendirme de yapılabilir (1. derece: sadece pelvis dilate; 4. derece: böbrek parankimi de etkilenmiş).</p>
+<h2>Gebeliğin Takibi</h2>
+<p>Hidronefroz tanısı alan gebelerde kromozom anomalisini düşündürecek ilave anomaliler yoksa karyotip tayini gerekmez. İzole hafif hidronefroz olgularında çoğunlukla doğum sonrası kendiliğinden normale döner. Çift taraflı ciddi hidronefroz durumunda kateter tatbiki denenebilir.</p>
+`},
+
+"hidrops": {
+  title: "Hidrops",
+  content: `
+<h2>Tanım</h2>
+<p>Hidrops fetalis veya eritroblastosis fetalis olarak da bilinir. Hidropsta fetusun vücudunda sıvı birikimi vardır — karın boşluğunda, göğüs boşluğunda, kalbin etrafında ve ödem olarak genel ciltaltında birikim görülür.</p>
+<p>Hidrops olgularının %10'u immunize hidrops, %90'lık bölümü ise immunizasyon dışı nedenle oluşan non-immun hidrops fetalitir. İmmunize hidropsta sebep fetusun anemik olmasıdır (çoğunlukla Rh uyuşmazlığına bağlı). Non-immun hidrops fetaliste olguların %50-80'inde bu durumun sebebi bulunamaz.</p>
+<img src="images/hidrops_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/hidrops_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/hidrops_3.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Tanı</h2>
+<p>Hidropsta tanı ultrasonografik değerlendirme ile konabilir. Vücut boşluklarında sıvı toplanması, anazarka tarzında genel ciltaltı ödeminin görülmesi tanı koydurucudur. Tanı için iki alanda sıvı toplanmasının tespiti yeterlidir.</p>
+<h2>Prognoz</h2>
+<p>Hidrops fetaliste prognoz genel olarak kötüdür. Özellikle erken gebelik döneminde görüldüğünde, fetusun yaşama şansı çok düşüktür. Prenatal tedavi yaklaşımları (fetal kan transfüzyonu vb.) seçilmiş olgularda uygulanabilir.</p>
+`},
+
+"hidrosel": {
+  title: "Hidrosel",
+  content: `
+<h2>Tanım</h2>
+<p>Skrotum içinde testislerin etrafında sıvı birikmesidir. Prenatal dönemde hidrosel, erkek fetüslarda ultrasonografi ile tespit edilebilir. Genellikle iyi huylu bir durumdur ve çoğunlukla kendiliğinden geriler.</p>
+<h2>Tanı ve Klinik Önemi</h2>
+<p>Ultrasonografide skrotum içinde aneoik (siyah) sıvı görülmesi tanı koydurucudur. İzole hidrosel durumunda prognoz genellikle çok iyidir. Hidroselerin büyük çoğunluğu doğumdan sonra ilk 12-18 ay içinde kendiliğinden kapanır.</p>
+<p>Nadiren hidrosel, hidrops fetalis gibi genel sıvı birikimi durumlarının bir parçası olabilir. Bu nedenle hidrosel tespit edildiğinde, diğer vücut boşluklarında da sıvı birikimi olup olmadığı değerlendirilmelidir.</p>
+<h2>Prognoz</h2>
+<p>İzole hidrosel iyi prognozludur. Doğum sonrası 12-18 ay içinde kendiliğinden gerilemeyen olgularda cerrahi müdahale gerekebilir.</p>
+`},
+
+"hiperekojen-barsak": {
+  title: "Hiperekojen Barsak",
+  content: `<h2>Tanım</h2>
+<p>Hiperekojen intestin de denilen hiperekojen barsak grüntüsü, fetal barsakların ekojenitesinin artmasını gösterir.Ekojenitesi artan barsaklar etraflarındaki diğer doku ve organlara göre daha açık renkli ve parlak görünürler. Normalde barsakların ekojenitesi karaciğerden daha fazla, kemikten ise daha azdır. Hiperekojen intestinde ise bu ekojenite yani parlaklık değişik derecelerde artmıştır. Genellikle barsakların tamamında ekojenitenin artmasına bağlı, karın içinde yagın hiperekojen intestin bulgusu görülür. Ayrıca ekojenitesi artan barsaklar bazen fetusun karnında ayrı bir kitle gibi de görülebilir. <p dir=</p>
+<h2>Klinik</h2>
+<p>Hiperekojen barsak görüntüsü gebeliklerin yaklaşık %1’lik bölümünde görülebilir. Tanı genellikle ikinci trimesterde konur. <p dir=</p>
+<p>Tanı konması durumunda fetus genetik ultrasonografi anlamında dikkatlice değerlendirilmelidir. Çünkü hiperekojen barsak görüntüsü normal fetuslarla kıyaslandığında Trizomi-21 (Down Sendromu)’lu fetuslarda daha sık görülür. Gebenin yaşından veya yapılan tarama testlerinden dolayı sahip olduğu riski yaklaşık 6.7 kat artırır. Benzer şekilde Trizomi-21 tanısı konan fetusların %1-%2’lik bölümünde hiperekojen barsak bulgusu görülebilir. Hiperekojen barsak görüntüsüne ek olarak NT artması, kısa kol-back kemikleri, kalpte hiperekojen odak varlığı, renal (böbrek) anomalileri, parmak anomalileri vb anomalilerin varlığı halinde Trizomi-21 görülme olasılığı çok daha artar. Bu nedenle hiperekojen barsak görünümü halinde Trizomi-21 için ultron markerleri dikkatlice aranmalıdır. <p dir=</p>
+<p>Hiperekojen intestin tanısı alan olguların yaklaşık %1-%2’lik bölümüne infeksiyonlar neden olabilir. İnfeksiyon etkeni olarak en fazla Cytomegalovirus (CMV) ile karşılaşırız. Ayrıca toksoplazma, influenza, parvovirus gibi diğer etkenlerde fetal infeksiyona naden olabilir. İnfeksiyon sonucu hiperekojen barsak görünümü mevcutsa sıklıkla, mikrosefali, kafaiçi kalsifikasyonlar, ventrikülomegali, hidrops (fetusun vücut boşluklarında sıvı toplanması), büyüme-gelişme geriliği gibi ilave anomali ve patolojilerle karşılaşılabilir. <p dir=</p>
+<p>Hiperekojen barsak görünümünün akla getireceği diğer bir sorun da kistik fibrozdur. Kistik fibrozlu hastaların %11’inde hiperekojen barsak görünümü mevcuttur. Ayrca hiperekojen barsak görünümü saptanan gebelerde fetal büyüme-gelişme geriliğinin daha sık görülebileceği de bilinmelidir. <p dir=</p>
+<p>Hiperekojen barsak görüntsü tesbit edilen gebelerin yaklaşık %10’unda fetusun kan yutmasının bu duruma neden olduğu bildirilmektedir. <p dir=</p>
+<p>Hiperekojen barsak görüntüsü olduğunda ilave bir anomali veya patolojinin var olup olmadığı aranmalıdır. İlave anomali veya patoloji yoksa yani izole hiperekojen barsak görüntüsü varsa prognoz genellikle iyidir. Özellikle de ekojenite derecesinin az olduğu olgular düşük riskli olarak kabul edilirler ve bunlarda genellikle prognoz iyi kabul edilir. Buna karşılık ilave patoloji veya anomalisi olan olgularda daha ileri değerlendirme yapılmalıdır. Böyle olgularda amniosentez gerekebilir. Amniosentez sonucu alınan sıvıda artan Trizomi-21 riski için karyotip bakılabilir, ayrıca kistik fibroz ve CMV infeksiyonunun var olup olmadığı da araştırılabilir. <p dir=</p>
+<p>Seri ultrasonografik değerlendirmelerle fetal büyüme izlenmelidir. Büyüme-gelişme geriliği tesbit edilen gebelerde ultrosonografik takibe Doppler değerlendirmeleride ilave edilmelidir. Hiperekojen barsağın tedavisi yoktur. <p dir=</p>
+<p>Ancak ilave anomali veya patolojisi olan olgularda bu ilave soruna bağlı olarak tedavi ve zaman zaman erken doğum gerekli olabilir <p dir=</p>`
+},
+"hipospadias": { title: "Hipospadias", content: `<h2>Tanım</h2>
+<p>Uretra açıklığı normalde penisin uç kısmında bulunur. Oysa hipospadyasta uretral açıklık penisin uç kısmı yerine uretral kanalın herhangibir yerinde bulunur. Penisin uç kısmında ise açıklık bulunmaz. Açıklık olguların %50’sinde penisin uç kısmına yakın ancak daha arkada, %30’unda penisin orta kısmında, %20’sinde ise penisin dip kısmında veya daha da geride bulunabilir. <p dir=</p>
+<p>Olgularının yaklaşık %40’ında genital sistem anomalileri hipospadiasa eşlik edebilir, %10 vakada inmemiş testis bulunur. Ayrıca olguların %7-%9’unda da genital sistem dışı anomaliler hipospadias ile birlikte bulunabilir. Kromozomlar genellikle normaldir. Ancak zaman zaman XXY ve XXXXY sendromları, Trizomi 13, Trizomi 18, Triploidi gibi kromozomal anomaliler görülebilir. <p dir=</p>
+<p>Fetal gelişim esnasında erkek genital sistem organlarının oluşumunu fetusun testislerinin sentezlediği androjen hormonu gerçekleştirir. Eğer fetusun testisleri yeterince androjen hormonu sentez edemezse hipospadias ve benzeri genital sistem anomalileri görülebilir. Ayrıca androjenlerin etkisini göstermesi için yeterince androjen reseptörü de olmalıdır. Bu reseptörler androjenlerin etkili olmalarını sağlarlar. Eğer reseptör sayısı yetersiz olursa androjen düzeyi normal olsa bile etkili olamayacağından erkek fetuslarda bu tür genital sistem anomalileri görülebilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Gebelikte hipospadias tanısı ultrasonografide konabilir. Ultrasonografik görüntüde penis genellikle küçüktür. Penisin uç kısmında iki taraflı hiperekojen çizgi vardır. Penisin uç kısmı hafifçe arkaya dönüktür. Lale görüntüsü söz konusudur. <p dir=</p>
+<p>İnmemiş testis varsa dişi fetustan ayırım yapmak güç olabilir. Yirminci gebelik haftasının öncesinde tanı yanıltıcı olabilir. Normal penis yanlışlıkla hipospadias tanısı alabilir. Ayırıcı tanıda ayrıca mikropenis ve ambiguous genitalia’da dikkate alınmalıdır. <p dir=</p>
+<p>Takip, tedavi: Hipospadias tanıs alan bir gebenin izlenmesi fetusta ek anomali yoksa normal gebelik takibi şeklinde olmalıdır. Doğum şekli de normal gebelikte ki gibidir. Ek anomali varlığında ise gebeliğin takibi bu anomalinin ne olduğuna bağlıdır. <p dir=</p>
+<p>Doğumdan sonra bebek detaylı olarak değerlendirilir, komplikasyonlar açısından takibe alınır. Bunlarda beklenen komplikasyonlar erken ve geç dönemde olmak üzere iki grupta toplanabilir. Erken komplikasyon uretra dış açıklığının darlığı veya kapanmasıdır. Geç komplikasyonlar ise idrar tutamama, peniste ereksiyon olmaması (sertleşme olmaması) ve infertilite (kısırlık) şeklinde karşımıza çıkabilir. <p dir=</p>
+<p>Hafif olgularda genellikle koplikasyonlarla karşılaşılmaz ve tedaviye de gerek olmayabilir. Daha ciddi olgularda ise tedavi gerekir. Tedavi cerrahidir. Cerrahi tedavi zamanı olgudan olguya değişir ve ciddi olgularda genellikle birkaç defa düzeltme operasyonu gerekli olabilir. <p dir=</p>
+<p>Hipospadyas olgularının görülme sıklığı 1000 doğumda 0.2- 4 olarak bildirilmiştir. Gebe yaşının artması ile riskte artar. Tekrarlama riski ise %4-%12 arasında değişir. <p dir=</p>` },
+"karacigerde-kalsifikasyon": { title: "Karaciğerde Kalsifikasyon", content: `<h2>Tanım</h2>
+<p>Karaciğer kalsifikasyonu, karaciğerin kapsülünde, damar yapısında veya parenkiminde olmak üzere değişik lokalizasyonlarda bulunabilir. Yapılan bir çalışmada %21 sıklıkla başka anomalilerle birlikte görülebildiği belirtilmiştir. Bu anomaliler organ malformasyonları ve kromozom anomalileridir. Ayrıca infeksiyon hastalıklarıda karaciğer kalsifikasyonunda birlikte gördüğümüz diğer bir durumdur. <p dir=</p>
+<h2>Tanı</h2>
+<p>Ultrasonografik olarak karaciğerdeki kalsifikasyonun tanısı konabilir. Karaciğerdeki kalsifikasyon parenkim içinde, damarsal yapıda veya karaciğer kapsülünde görülebilir. Kalsifikasyonun görüldüğü yer, kalsifikasyonun sebebi hakkında fikir verebilir. Örneğin barsak delinmesi sonucu oluşan mekonyum kalsifikasyonu karaciğerin kapsülünde görülürken, parenkimdeki kalsifikasyonlar daha çok sistemik patolojik olaylara bağlı olarak gelişir. <p dir=</p>
+<p>Karaciğer kalsifikasyonlarının sebepleri: Altta yatan patolojiye bağlı olarak gelişir. Bunlar mekonyum peritonitisti, damar lezyonları, infeksiyonlar ve neoplazik oluşumlar gibi durumlardır. <p dir=</p>
+<p>Mekonyum peritonitiste karaciğerde kapsül boyunca kalsifikasyon görülmesinin dışında karın içi zarında ve barsakların arasında yaygın olarak kalsifiye odaklara rastlanır. Burada ayrıcabarsak delinmesine bağlı olarak barsakta genişlemiş alanlar ve karın içinde sıvı birikmesi olan asit bulgusuda görülebilir. Burada ekojenik barsak görüntüsü mevcuttur. Kistik fibroziste akla gelmeli ve gerkli testler yapılmalıdır. Mekonyum peritonitistinde ilave olarak gastroşizis, volvulus, barsak atrezisi ve Hirschsprung hastalığı gibi patolojik durumlarlada karşılaşılabilir. <p dir=</p>
+<p>Gebelikte geçirilen bazı infeksiyonlar, fetal karaciğerde kalsifikasyonların görülmesine yol açabilir. Örneğin toksoplazma, CMV, varisella zoster, herpes simpleks, parvovirus, kızamıkcık ve sifiliz gibi infeksiyonlar fetal karaciğer parenkiminde lokalize kalsifiye alanlar oluşturur. <p dir=</p>
+<p>Karaciğerdeki neoplazmlar nadir görülürler ancak karaciğerde kalsifikasyona yol açabilirler. Bunlara hemangiom, hamartom, teratom, hepatoblastom vb neoplastik oluşumlar örnek gösterilebilir. <p dir=</p>
+<p>Fetusta nadir görülen safra taşlarıda karaciğerde kalsifiye görünüm oluşturabilen diğer bir durundur. <p dir=</p>
+<p>Karaciğerin iskemik infarktı da karaciğerde yaygın veya lokalize alanlar halinde kalsifiye görünüme neden olabilir. Bu durum karciğerdeki damarların yetmezliği sonucu oluşan doku hasarına bağlıdır. Ayrıca portal ven ve hepatik ven kalsifikasyonları da karaciğerde kalsifiye görüntüye neden olabilir. <p dir=</p>
+<p>Ayrıca trizomi 13, trizomi 21, trizomi 18 gibi kromozom anomalilerinde karaciğerin kalsifikasyonunada sık rastlanabilir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Başka patolojik bulgunun olmadığı izole, tek bir alandaki karaciğer kalsifikasyonlarında prognoz altta yatan sebebe bağlı olarak genellikle iyidir. Bu olgularda karaciğerdeki kalsifiye alanlar doğumdan sonraki dönemde genellikle kendiliğinden kaybolabilir. Çoğul kalsifikasyonların olduğu vakalarda genellikle ilave anomalilerde bulunur. Prognoz bu anomalilerin ne olduğuna bağlı olarak değişebilir. <p dir=</p>` },
+"kistik-adenomatoid-malformasyon": { title: "Kistik Adenomatoid Malformasyon", content: `
+<img src="images/kistik-adenomatoid-malformasyon_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Tanım</h2>
+<p>Konjenital Kistik Adenomatoid Malformasyon (KAM) olarakta adlandırılır ve terminal bronşiollerin aşırı büyümesi ile karakterize akciğer displazileri veya akciğerin iyi huylu hamartomlarıdır. Akciğerde kitle oluşturan patolojilerin en sık (%75) sebebidir. KAM gebeliğin ilk 6 haftasında gelişir. Olguların yaklaşık %26’sında pektus ekskavatum, fetal hidrops, böbrek agenezisi gibi ilave anomalilerde birlikte görülebilir. KAM, fetal akciğerde, % 95 sıklıkla tek taraflı, çoğunlukla tek lobda görülür. Bazen büyük boyutlu bir veya birkaç kist varken, bazen birçok mikrokistlerden oluşan yaygın lezyonlara rastlanabilir. Çoğunluklada hem büyük kistlere hemde mikrokistlere rastlanan karışık yapılar içeren lezyonlar görülebilir. Sadece büyük kistler varsa Tip 1 olarak adlandırılır. Karışık kistik yapı varsa Tip 2, sadece mikrokistler varsa Tip 3 olarak sınıflandılabilir. Tip 1’de kistler arasında normal alveoller vardır. Prognoz iyi olabilir. Tip 2 ve Tip 3’te ise prognoz daha kötüdür. Konjenital Kistik Adenomatoid Malformasyon lezyonu pulmoner arterden beslenir ve genellikle gebeliğin 20-26 haftalarında hızlı gelişme gösterir. Kalıtsal özellik göstermez. Herhangi bir teratojen ajanla ilşkilendirilmemiştir. Tekrarlama riski çok düşüktür. <p dir=</p>
+
+<img src="images/kistik-adenomatoid-malformasyon_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Tanı</h2>
+<p>KAM olgularında akciğerde büyük kist veya kistlerle, daha küçük boyutlu kistlerden oluşan yaygın solid kitlenin ultrasonda görülmesi ile tanı konabilir. Büyük kistler 5 mm’den büyük çaplı kistlerdir. Daha küçük kistler ise mikrokistler olarak değerlendirilir. Kalp patolojik oluşumun konum ve büyüklüğüne bağlı olarak yer değiştirebilir. Mide normal lokalizasyonunu korur. Hidrops (vücut boşluklarının sıvı ile dolu olması) olguların %10’unda görülür ve kötü prognozu gösterir. Zaman zaman da KAM’a ait kitlenin özofagusa (yemek borusuna) yaptığı baskı sonucu polihidramnios (amnios sıvısının fazla olması) görülebilir. Fetal MR yapılmasıda tanıda yardımcı olabilir. Ancak çok gerekli değildir. <p dir=</p>
+<p>KAM tanısı koyarken, bronkopulmoner sekuestrasyon, hibrid lezyon, konjenital diafragma hernisi, konjenital lobar amfizem, trakeal atrezi, teratom ve diğer kistik oluşumlarla ayırıcı tanının yapılması gerekir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Gebelik döneminde KAM olgularının büyük bölümünde saptanan patoloji kalıcıdır. Gebelik döneminde az sayıdaki vakada lezyonlarda gerileme görülebilir. Prognozu etkileyen en önemli durum hidropsun olup olmamasıdır. Tanı sırasında hidrops yoksa prognoz genellikle iyidir. Ancak tedavi edilmeyen veya edilemeyen hidrops görülürse fetusun ölümü kaçınılmazdır. Doğumdan sonra infeksiyon riski yüksektir. Ayrıca bebeklik ve çocukluk döneminde solunum yolu kanserleri açısından az da olsa bir risk artışı söz konusu olabilir. <p dir=</p>
+<h2>Gebelikte takip ve tedavi</h2>
+<p>Hidrops gelişmedikçe 1-2 haftalık aralıklarla gebenin izlenmesi yeterlidir. Otuzikinci haftanın sonrasında hidrops gelişirse gebeye betametazon verilerek (Fetusun akciğerlerinin maturasyonunu hızlandırmak için) doğum gerçekleştirilir. Doğum sırasında plasenta ayrılmadan fetusun akciğerindeki lezyon çıkartılır. Bu sırada fetusun oksijen ihtiyacı plasental destekle sağlanır. Ancak bu operasyon çok üst düzeyde donanım ve imkanlara sahip merkezlerde denenebilir. Otuzikinci haftanın öncesinde hidrops gelişirse gebelikte tedavi denenebilir. Bu amaçla büyük boyutlu kistler varsa drene edilebilir. Göğüs boşluğu ile amniotik boşluk arasında geçiş sağlayan şant konabilir. Ayrıca devam eden gebelikte uterus içinde fetusta lezyonun çıkartılmasının da mümkün olduğu bildirilmiştir. Doğum acil yoğun solunum desteğinin verilebileceği merkezlerde yapılmalıdır. Gebelikte gerileyen bütün olgularda doğum sonrası seri akciğer grafileri çekilmelidir. Lezyonun çıkartılması gereken olgularda eğer fetusun durumu uygunsa operasyonu 1 ay sonra yapmak gerekir. Çünkü ilk dört hafta içinde anestezinin riski çok yüksektir. Ayrıca lezyonun erken çıkartılması akciğerin kalan bölümünün kompansatuar olarak büyümesini hızlandırır. Bu bakımdan ameliyat çok geç döeneme de bırakılmamalıdır. <p dir=</p>` },
+"kistik-higroma": { title: "Kistik Higroma", content: `<h2>Tanım</h2>
+<p>Kistik higroma (KH), genellikle boyun arka veya yan bölümünde yer alan, lenfatik sistame ait anomalidir. Boyundaki yumuşak doku içinde tek veya septumlarla ayrılan çoğul kistler mevcuttur. Kistlerin içindeki sıvı saydam veya bulanık olabilir. Kistin büyüklüğü çok değişkendir. Çoğunlukla genel vücut ödemi tabloya eşlik eder. <p dir=</p>
+<p>Kistik higromanın görülme sıklığı 1/1000 canlı doğumdur. Düşüklerden sonra yapılan araştırmalarda ise 1/200 oranında kistik higromaya rastlandığı bildirilmiştir. Lenfatik sistem oluşumu gebeliğin 5 haftasında başlar. Oluşan lenf sistemi ile venöz sistem (toplardamarlar) arasında gebeliğin 40. gününde bir bağlantı oluşur. Oluşan bu bağlantı sonucu lenfatik sistemdeki sıvı venöz sisteme boşalır. Bu bağlantının oluşamadığı durumlarda fetusun boyun kısmında lenfatik sisteme ait sıvının birikimine bağlı kistik yapılar oluşur. Bu kistik yapılar kistik higroma adını alır. <p dir=</p>
+<h2>Tanı</h2>
+<p>Kistik higroma tanısı ultrasonografi ile en erken 10. gebelik haftasından itibaren konabilir. En tipik görüntü boyunun arka tarafında simetrik kistik yapıdır. Genellikle bu kistik yapının septalarla bölümlere ayrıldığı görülür. Kistik higroma değişik büyüklüklerde olabilir. Bütün amniotik kaviteyi dolduracak kadar geniş kistler olduğu gibi sadece boynun arkasında lokalize kalan küçük boyutlu kistlerde görülebilir. <p dir=</p>
+<p>Kistik higroma olgularında sıklıkla ek anomaliler tabloya eşlik edebilir. Özellikle vücut boşluklarının sıvı ile dolu olması durumu olan hidrops ile yaygın vücut ödemi sık görülür. Ayrıca kardiak anomaliler başta olmak üzere yapısal anomaliler ve kromozomal anomaliler sık görülür. Kromozomal anomalileri özellikle Turner sendromu, Down sendromu (Trizomi-21), Trizomi-18, ve Trizomi-13 olarak karşımıza çıkabilir. İlk trimesterde kistik higroma tanısı konanlarda genellikle Down sendromu fazla görülürken ikinci trimesterde tanı konanlarda Turner sendromuna daha sık rastlanır. Down sendromu görülme ihtimali gebenin yaşı ile orantılı olarak artar. Turner sendromunun görülme sıklığının ise gebe yaşı ile ilişkisi yoktur. Kistik higromaya, dişi fetuslarda erkeklere göre daha fazla rastlanır. <p dir=</p>
+<p>Kystik higroma tanısı koyarken ense kalınlığında artma, ensefalosel, servikal teratom gibi başka patolojik durumlar ile ayırıcı tanısının gerekli olduğu unutulmamalıdır. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Kistik higromaların %10-20’lik bölümünde kendiliğinden kistin gerilemesi görülebilir. Kistin gerilediği vakalar genellikle kistin çok küçük olduğu ve kromozomları normal olan fetuslardır. <p dir=</p>
+<p>Kistik higroma olgularında canlı doğum oranı yaklaşık %12’dir. Bunların sadece %10 kadarında büyük problemlerle karşılaşılmaz. <p dir=</p>
+<p>Kistik higromaya sıklıkla kromozomal anomali, oligohidramnios (amnios sıvısının gerekenden az olması) ve hidropsla birlikte rastlanır. Bu durumlarda da çoğunlukla fetal ölüm görülür. Kistin büyüklüğü, kist içinde septaların olup olmamasıda prognozu etkiler. Kistin büyüklüğü ne kadar fazlaysa fetal ölüm de o kadar fazla görülür. Kist içinde septaların var olmasıda septasız kistlere göre fetal ölümün daha fazla olacağını gösterir. <p dir=</p>
+<p>Hidrops veya fetusun vücudunda yaygın ödemin olması durumu da olguların çok büyük bölümünün (% 80-90) fetal ölüm ile sonuçlanacağını gösterir. İlk trimesterde tanı konan kistik higroma olgularının büyük bölümünde yirminci gebelik haftasına kadar fetal ölüm gerçekleşebilir. <p dir=</p>` },
+"kondiloma-akuminata": { title: "Kondiloma Akuminata", content: `<p>Kondiloma akuminata vulva, vagina serviks, uretral mea (idrar kanalının dışa açılan bölümü) perine ve anüste görülen küçük siğillerin oluşturduğu yaygın lezyonlardır. Hastalığın etkeni Human Papilloma Virus (HPV)’un bazı bazı tipleridir. Bilindiği gibi HPV’un 100’den fazla tipi vardır. Bunların bir bölümü serviks (rahim ağzı) kanserine, bir bölümü ellerdeki siğillere ve bir bölümüde dış genital organlardaki kondilom denilen küçük siğillere yol açar. Kondiloma akuminata oluşumuna yol açan en belirgin HPV’u Serotip 6 ve Serotip 11’dir. İnfeksiyon etkeni deriden deriye geçer ve genellikle cinsel temasla yayılır. Her yaşta rastlanmasına rağmen en fazla görüldüğü dönem grubu 16-25 yaşlar arasıdır. İnkübasyon süresi (virus bulaştıktan sonra kondilomların ortaya çıkmasına kadar geçen süre) 3 hafta ile 8 ay arasında değişebilir. Ortalama inkübasyon süresi 3 aydır. Hastaların yaklaşık %70’i infeksiyonu infekte bir eşten cinsel ilişki sırasında alır. Çok seksüel eşlik, candida, trikomonas ve bakteriyel vaginozis gibi diğer vaginal infeksiyonlar kondiloma akuminata oluşumu için risk faktörleridir. <p dir=</p>
+<h2>Klinik</h2>
+<p>İnfeksiyon genellikle asemptmatiktir yani belirti vermez. Kondilomların görüldüğü olgular, infekte kişilerin %2’sinden daha azdır. Lezyonlar ağrısız, yumuşak, küçük, deriden çıkıntılı lezyonlardır. Bazen birkaz küçük siğilden ibaret lezyon olduğu gibi çoğunlukla yaygın gruplar oluşturabilirler. Hatta zaman zaman gebelikte normal doğumu engelleyebilecek boyutta büyük kitle oluşturan lezyonlarada rastlanabilir. Kondilom genellikle dış genital organlarda görülebilir ancak nadirde olsa ağız içinde, dilde, diş kavitesinde, idrar yollarında, idrar kesesinde ve rektumda (kalın barsağun anusten önceki son kısmı)’da görülebilir. Servikal kondilom varlığında smear ve kolposkopik muayene gerekir. Servikal smearda anormal sonuçlara sıklıkla rastlanabilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanı lezyonların görülmesi ile kolaylıkla konabilir. Ayırıcı tanıda özellikle kondiloma lata ve papilloma akla gelmelidir. Tanıda fizik muayene dışında kolposkopik değerlendirme ve biopsi gerekli olabilir. <p dir=</p>
+<h2>Tedavi</h2>
+<p>Tanı konduğu anda hastanın seksüel partneride değerlendirilmelidir. Lokal hijyene dikkat edilmelidir. Daha sonra da lezyonun özelliğine göre tedaviye geçilmelidir. <p dir=</p>
+<p>Hafif lezyonlarda genellikle sitolitik lokaletkili ilaçlar kullanılabilir. Bu ilaçlara podofilin, dikloroasetikasit, trikloroasetik asit kullanılabilir. Ayrıca son zamanlarda antiviral ve immunomodülatör etkili imiquimod %20 (aldara krem) de bu amaçla kullanılmaktadır. Bu lokal etkili ilaçlar sadece lezyonların üstüne gece yatmadan önce sürülür, 7-8 saat sonra o bölge yıkanıp kurulanır. İlaç uygulanacak alan en fazla <span class=</p>
+<p>işlem haftada 3-4 defa tekrarlanır ve lezyonlar kayboluncaya kadar tedaviye devam edilir. Bu ilaçlar uygulanırkan dikkat edilecek önemli bir nokta da sağlıklı deriye ilaçların sürülmemesidir. <p dir=</p>
+<p>Podofillin gebelik sırasında kullanılmamalıdır. Çünkü düşüklere yol açabileceği gibi kas ve sinir sistemi üzerine potansiyel toksik etkisi vardır. <p dir=</p>
+<p>Eğer lezyonlar biraz daha belirginse ve siğiller bir arada kitle oluşturacak şekilde çoğalmışsa lokal ilaç kullanımı yerine elektrokoterizasyon veya kriyoterapi gibi yöntemlerle siğillerin yok edilmesi şeklindeki tedavi daha uygun olur. <p dir=</p>
+<p>Yaygın çok büyük kitleler şeklindeki lezyonlarda ise cerrahi eksizyonla bu siğillerin çıkartılmaları öncelikli tedavi şekli olabilir. <p dir=</p>
+<p>İlaç tedavisinde lezyonlar kaybolmazsa elektrokoterizasyon gerekebilir. Tedaviden bir süre sonra lezyonların tekrar çıkması yani rekürens oranı yaklaşık % 65’tir. <p dir=</p>` },
+"koroid-pleksus-kisti": { title: "Koroid Pleksus Kisti", content: `<h2>Tanım</h2>
+<p>Koroid pleksusta kistik oluşum görülmesidir. İkinci trimesterin erken dönemlerinden itibaren görülebilir. Koroid pleksus kisti (KPK) demek için çapının 2 mm’den büyük olması gerekir. Tek taraflı veya iki taraflı görülebilir. Ayrıca tek veya çok sayıda olabilir. <p dir=</p>
+<h2>Ultrasonografik bulgular</h2>
+<p>Koroid pleksus içinde bir veya daha fazla sayıda 2 mm’den büyük çaplı kistik oluşumların görülmesiyle tanı konur. Renkli dopplerde akım yoktur. Diğer anomalilerle birlikte görülme sıklığı % 12 olarak bildirilmiştir. <p dir=</p>
+<p>Kist çapı 10 mm’den büyük olursa özellikle Trizomi-18 düşünülmelidir. Tüm trizomi-18 olgularının yaklaşık % 50’sinde KPK görülür. <p dir=</p>
+<p>İzole (başka anomali olmadan) KPK görülmesi durumunda Trizomi-21 (Down Sendromu) düşünülmez. Buna karşılık KPK ile birlikte NT artışı, kalpte hiperekojen odak görülmesi, kol-bacak kemiklerinin kısa olması, hiperekojen incebarsak, renal pelviektazi, vb markerlerde varsa Trizomi-21 akla gelmelidir. <p dir=</p>
+<p>Bunun dışında KPK’nin diğer anomalilerle birlikte görülmesi durumunda kromozom anomalisi riskinin yaklaşık 20 kat arttığı söylenebilir. Bu nedenle ultrasonografik değerlendirme yaparken KPK’nin izole olup olmadığı detaylı olarak incelenmeli, özellikle ellere, ayaklara ve kalbe ait patolojik bulguların varlığı araştırılmalıdır. Koroid pleksus kistinin ultrasonografi ile tanısı konduğunda; koroid pleksus papillomu, hafif ventrikülomegali ve kafa içi kanamalarından ayırt edilmesi gerekir. <p dir=</p>
+
+<img src="images/koroid-pleksus-kisti_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/koroid-pleksus-kisti_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Klinik</h2>
+<p>Çapı 10 mm’den küçük olan izole KPK olguları düşük riskli kabul edilebilir. Normal fetusların yaklaşık %1’inde görülebilir. Düşük riskli grupta kromozom anomali riski 1/400’den daha azdır. <p dir=</p>
+<p>Doğum zamanında anne yaşı 35’ten büyükse Trizomi-18 riskinde artış söz konusudur. <p dir=</p>
+<p>Çapı 10 mm’den büyük olan kistlerde gerileme yavaş olmakla birlikte 32 haftadan önce kistler kaybolur. <p dir=</p>
+<p>İzole kistlerde prognoz iyidir. Mental ve motor gelişimle ilgili sorun oluşmaz. Buna karşılık KPK’ne ilave anomali varsa, bu durumda prognoz kromozomun normal olup olmamasına ve ilave anomalinin ciddiyetine bağlıdır. <p dir=</p>
+<p>Koroid pleksus varlığında aşağıdaki durumlar söz konusu ise amniosentez ile karyotip tayini gerekir: <p dir=</p>
+<p>Buna karşılık, düşük riskli hastalarda izole KPK varsa, amniosentez gerekli olmayabilir. <p dir=</p>` },
+"mega-sisterna-magna": { title: "Mega Sisterna Magna", content: `<h2>Tanım</h2>
+<p>Mega sisterna magna, sisterna magnanın 10 mm’den daha geniş ölçülmesidir. Dördüncü ventrikül normal bulunur ve serebeller hemisferler normal görünümdedir. Aynı şekilde serebeller vermis tamdır ve normal yapıdadır. <p dir=</p>
+<p>Tanı ultrasonografik değerlendirme ile konur. Ancak tanıda MR görüntülemesi zaman zaman ayırıcı tanı için gerekebilir. Özellikle Trizomi-18 ile birlikte olabilir. Bu nedenle mega sisterna magna tanısı alan olgular, ilave anomaliler açısından dikkatlice değerlendirilmelidir. Bu değerlendirmede koroid pleksus kisti, kalp anomalileri, omfalosel, el ve ayak özellikle anomalileri aranmalıdır. <p dir=</p>
+<p>Mega sisterna magna tanısı konulurken Dandy-wolker malformasyonu, normal erken beyin gelişimi, araknoid kist ve Galen ven malformasyonları ile ayırıcı tanısının yapılması gerekir. <p dir=</p>
+<p>İzole olgular (ek anomali içermeyen) dişi ve erkek fetuslarda eşit oranda görülür ve olumsuz klinik etkiye yol açmaz. Trizomi-18 ile birlikte görülen olgularda ise erkek fetuslarda rastlanma oranı daha fazladır. <p dir=</p>` },
+"mekonyum-peritonitis": { title: "Mekonyum Peritonitis", content: `<h2>Tanım</h2>
+<p>Gebelik sırasında, fetusun barsağının delinmesi sonucunda barsak içeriğini oluşturan mekonyumun fetusun karın boşluğuna geçmesidir. Görülme sıklığı yaklaşık 1/2000 gebelik olarak bildirilmiştir. Genel özelliği fetusun karın boşluğunda sıvı birikmesi olan asit, kalsifiye değişime uğrayan mekonyum ve barsaktaki genişlemenin birarada görülmesidir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanı ultrasonografik bulgulara göre konabilir. Barsaktaki delinmenin büyüklüğüne ve delinme zamanına göre değişik bulgularla karşılaşılabilir. Fetusun karın boşluğunda yaygın olarak karın duvarında, karaciğerin etrafında, barsakların arasında mekonyuma ait kalsifiye hiperekojen odaklar görülebilir. Fetusun karın boşluğunda mekonyuma bağlı yalancı kistler görülebilir. <p dir=</p>
+<p>Ayrıca zaman zaman asit tabloya eklenmişse karın boşluğunda hipoekojen alanlar olarak ultrasonografide görülebilir. <p dir=</p>
+<p>Barsak delinmesi eğer barsağın herhengi bir seviyede tıkalı olması veya atrezi gibi barsağın bir bölümünün oluşmamasının sonucunda gelişmiş ise barsağın tıkalı olan bölümünün üst kısmında genişlemeler görülebilir. Ayrıca amniotik sıvının barsaktan yeterince geçmemesi sonucu polihidramnios (amnios sıvısının normalden fazla olması)’ta görülebilir. <p dir=</p>
+<p>Hiperekojen barsak görüntüsü, başka nedenlerle oluşabilen abdominal kalsifikasyonlar, asit, karın boşluğuna ait kistik oluşumlar ile ayırıcı tanısının yapılması gerekir. <p dir=</p>
+<p>Mekonyum peritonitis zaman zaman başka anomalilerle birlikte de görülebilir. Örneğin kistik fibrozis’in mekonyum peritonitis ile birlikte görülme oranı değişik çalışma gruplarınca, %15-%40 olarak bildirilmiştir. <p dir=</p>
+<p>Ayrıca jejunoileal atrezi, persistent cloaka ve gastroşizis’te mekonyum peritonitis ile birlikte görülebilen diğer anomalilerden birkaçıdır. <p dir=</p>
+<p>İnfeksiyonlarda mekonyum peritonitisine sebep olabilir. En sık parvovirus, CMV, kızamıkcık, hepatit-b ve hepatit-A mekonyum peritonitisle birlikte görülür. Burada muhtemelen barsakların damar yapılarını bozarak barsağın delinmesine yol açmaktadır. Böylece infeksiyonla birlikte mekonyum peritonitis görülebilmektedir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Doğumdan önce tanı konan olgularda prognoz, doğumdan sonra tanı konanlara göre daha iyidir. Çünkü doğum öncesi tanı konanların büyük çoğunluğunda delinen barsak kendiliğinden kapanabilir. Gebelikte tanı konan olgularda ölüm oranı %11-%14 olarak bildirilmiştir. Oysa doğumdan sonra mekonyum peritonitis tanısı alan bebeklerde ölüm oranı %40-%50 olarak bildirilmiştir. Kistik fibrozisli olgularda eğer barsaklarda delinme sözkonusu ise ölüm oranı %50’den fazla olabilir. <p dir=</p>
+<h2>Takip ve tedavi</h2>
+<p>Eğer kistik fibrozis düşünülürse genetik danışma verilmelidir. Gerekli görülmesi durumunda amniosentez yapılarak direkt olarak fetusta gen mutasyonu aranmalıdır. <p dir=</p>
+<p>İzole mekonyum peritonitis (ek anomali olmayan) varsa normal doğum planlanır, bebek doğumdan sonra detaylı olarak değerlendirilir. Burada bebeğe karın muayenesi yapılır ve karın filmi çekilir. Eğer normalse bebeğin ağızdan beslenmesine izin verilebilir. Küçük bir ihtimalle de cerrahi girişim gerekli olabilir. <p dir=</p>
+<p>Mekonyum peritonitisi dışında asit, barsak genişlemesi, karın kisti gibi ek anomali varsa durum daha ciddidir. Bunlarda doğum yenidoğan yoğun bakımı ve cerrahi hizmeti verebilecek bir üst merkezde planlanmalıdır. Doğumdan sonra yenidoğan uzmanı ve pediatrik cerrah tarafından bebek değerlendirilmelidir. Bu bebeklerde cerrahi girişim ihtimali %25-%50 arasında değişir. Ayrıca ağızdan beslenme yerine bir süre serumla damar yolundan beslenme gerekli olabilir. <p dir=</p>` },
+"multkistik-displastik-bobrek": { title: "Multikistik Displastik Böbrek", content: `<h2>Tanım</h2>
+<p>Multkistik displastik böbrek (MKDB), renal displazi veya Potter ti-2 olarakta isimlendirilir. Bu anomalide renal doku yapısı bozulmuş olup yerine fonksiyon görmeyen, birbiriyle bağlantısız, değişik büyüklükte ve çok sayıda kistik yapılar yer almıştır. Genellikle tek taraflı ( % 80 ) olup, sol böbrekte daha sık görülür. Multikistik displastik böbrek, böbreğin kistik hastalıklarının en yaygın şeklidir. Görülme sıklığı 1/3000 canlı doğumdur ve erkeklerde 2 kat daha sık görülür. <p dir=</p>
+<h2>Patoloji</h2>
+<p>Böbrekte değişik boyutta birçok kistik yapı sözkonusudur. Kistler arasında genellikle normal böbrek dokusu bulunmaz. Bunun yerine yoğun stromal doku yer alır. Tipik olarak böbrek pelvisi ve ureter yoktur. Renal arter ise ya oluşmamıştır veya çok küçüktür. Tipik kistik dejenerasyon çoğunlukla böbreğin tamamını etkiler. Nadiren böbreğin kısmen etkilendiği olgularda görülür. <p dir=</p>
+<h2>Tanı</h2>
+<p>Multikistik displastik böbrek tanısı genellikle ikinci trimester ortalarında ultrasonogrfik değerlendirmede saptanır. Tek taraflı MKDB olgularında bir taraf renal fossada normal böbrek doku yerine tipik kistik görüntü ile karşılaşılır. Tek taraflı olduğu için genellikle mesane görüntüsü ile amniotik sıvı miktarı normaldir. Çift taraflı MKDB olgularına ise mesane görülmez. Amniotik sıvı miktarı ya çok azdır veya çoğunlukla yoktur. <p dir=</p>
+<p>Tek taraflı MKDB tanısı konduğunda özellikle diğer böbrek ve böbrek dışı anomaliler açısından fetus dikkatlice değerlendirilmelidir. Tek taraflı MKDB olgularının % 39’undan fazlasında diğer böbrekte anomali veya patolojiler görülebilir. Bunların en sık görüleni vesikoureterik reflüdür. Ayrıca renal agenezi, renal hipoplazi, pelviuretrik junction obstrüksiyonu rastlanan diğer anomalilerdir. Böbrek dışı anomaliler ise kalp, sindirim sistemi, merkezi sinir sistemi, ekstremite anomalileri ile dudak-damak yarığı anomalileridir. <p dir=</p>
+<p>Ayırıcı tanı özellikle hidronefrozla yapılmalıdır. Hidronefrozda kistik görünümlü yapıların birbirleriyle ilişkili oldukları unutulmamalıdır. Hidronefrozun dışında obstrüktif kistik displazi, basit böbrak kisti, otozomal resesif polikistik böbrek hastalığı, otozomal dominant polikistik böbrek hastalığı ve dilate ureter gibi anomali veya patolojik durumlarla ayırıcı tanıya gidilmelidir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Tek taraflı MKDB olgularında, diğer böbrek normalse prognoz iyidir. Diğer böbrekte patoloji veya anomali varsa prognoz bu böbrekteki probleme bağlıdır. Sorun ciddiyse prognoz kötüdür. Çift taraflı böbrekte MKDB varsa prognoz çok kötüdür. Burada doğumdan kısa süre sonra, amniotik sıvı yokluğu veya azlığı sebebi ile ortaya çıkan akciğer yetmezliği ile bebek ölümü kaçınılmazdır. <p dir=</p>
+<p>Gebeliğin takibi: Gebeliğin takibi anomalinin tek taraflı veya iki taraflı olup olmadığına bağlıdır. Ayrıca tek taraflı MKDB olgularında başka anomalilerin var olup olmaması, başka anomali varsa bu anomalinin ne olduğu ve sorunun büyüklüğü de takibi etkileyen diğer faktörlerdir. <p dir=</p>
+<p>Tek taraflı izole (başka anomalisi olmayan) MKDB olguları rutin gebelik takibi ile izlenir. Ancak fetal eko yapılması ve pediatrik urolog ile konsülte edilmesi gerekir. İki taraflı MKDB olgularında ise mevcut anomalinin yaşamla bağdaşmadığı konusunda bilgi verilerek gebeliğin sonlandırılması aileye önerilebilir. <p dir=</p>
+<p>Tek taraflı MKDB olgusunda, diğer böbrekte eğer ureteropelvik junction obstrüksiyonu varsa ya erken doğum planlanır veya nadiren de idrar akışını kolaylaştırmak için doğum öncesi fetusa şant yerleştirilmesi gerekli olabilir. <p dir=</p>
+<p>Tek taraflı izole MKDB olgularında kromozomal anomali riski çok azdır. Bu nedenle bunlarda kromozom analizine gerek yoktur. Buna karşılık tek taraflı MKDB olup, ilave anomalisi olanlarda kromozomal anomali riski artacağından böyle olgularda amniosentez ile karyotip tayini yapmak gebeliğin takibi açısından önemlidir. <p dir=</p>
+<p>Tek taraflı izole MKDB olgularının doğum şekli rutin sağlıklı gebeler gibidir. Vaginal doğumda sürekli monitorizasyonla fetus izlenir. Sezaryen kararı diğer endikasyonların varlığına bağlıdır. Çift taraflı MKDB olgularında travay sırasında fetal monitorizasyona gerek yoktur. Fetal distress nedeniyle bu gebelerde sezaryen yapılmamalıdır. <p dir=</p>
+<p>Doğum sonrasında bütün bebeklerde böbrek ultrasonografisi yapılmalıdır. Ayrıca bebekler böbrek fonksiyonu ve reflü açısından değerlendirilmelidir. Sonuçları normal çıkan bebeklerde ilk yıl için 6 ay arayla, daha sonra da yılda bir defa olmak üzere ultrasonografik takibe alınmalıdır. Eğer bebekte sık aralıklarla tekrarlayan infeksiyon varlığı, hipertansiyon gelişimi veya Wilms tümörü oluşumu gibi komplikasyonların görülmesi durumunda cerrahi girişim gerekli olabilir. <p dir=</p>` },
+"myom": { title: "Myom", content: `<h2>Tanım</h2>
+<p>Uterusun bağ dokusu kaynaklı iyi huylu tümörüdür. Uterusun değişik yerlerinde bulunur. Uterusun içindeki boşluğa doğru büyüyen myomlar submukoz myom adını alır. Uterus duvarının içinde bulunan myomlar intramural olarak isimlendirilirken, uterus duvarından kaynaklanıp uterusun dışına karın boşluğuna doğru gelişim geösteren myomlarda subseröz myomlar olarak adlandırılır. Ayrıca servikste bulunan myomlar servikal myom ismini alırken, ligamentum latum yaprakları arkasında kalan myomlar intraligamenter myom olarak bilinir. Ayrıca uterusun içinde bulunan veya uterusun dışında yer alıp karın boşluğuna doğru çıkıntı yapan saplı (pediküllü) myomlar vardır. Uterusta tek bir myom olabileceği gibi, aynı anda birçok myom bir arada da bulunabilir. <p dir=</p>
+<p>Uterus myomları kadınların yaklaşık %30’unda bulunurken, 50 yaş üstü kadınlarda görülme sıklığı yaklaşık %40-%50 arasındadır. Myomların sebebi bilinmemektedir. Uterustaki düz kas hücrelerinden kaynaklanır. Östrojen, progesteron, epidermal growt faktör gibi maddeler myomların büyümesini artırır. Doğurmamış olmak, erken yaşta adet başlaması, anne, kız kardeş gibi yakınlarında myom olması kadınları myom açısından risk grubuna sokar. <p dir=</p>
+<h2>Şikayetler</h2>
+<p>Myomlarda şikayetler genellikle myomun büyüklüğüne ve lokalizasyonuna bağlıdır. Myomlar uterusun hacmini büyütür ve şeklini bozabilir. Kasıklarda ve karın boşluğunda şiddetli ağrı yapabilir. Ayrıca nisbeten hafif bel ağrısı myomlarla birlikte görülebilir. Barsakların ve mesanenin üstüne baskı yapabilir ve bunlarla ilgili şikayetlere yol açabilir, mesanenin dolmasını ve idrar akışını engelleyebilir. Adetlerin ağrılı geçmesine yol açabilir, ayrıca adet kanamalarının miktar ve süresini çok artırabilirken aynı zamanda adet dışı ara kanamalara da sebep olabilir. Böyleca anemi oluşumuna yol açarlar. Saplı myomların sapları etrafında dönmesi veya myomun dejenerasyon denilen yapısının bozulması ani ve çok şiddetli ağrılara yol açabilir. Submukoz saplı myomlar zaman zaman serviksten vaginaya hatta bazen dışarıya çıkabilirler. Myomlar infertiliteye çok nadiren sebep olurken submukoz myomlar düşüklere yol açabilir. Ayrıca uterusun serviksine yakın konumda bulunan büyük myomlar vaginal doğumları engelleyebilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Myomlarda tanı pelvik muayene ile kolaylıkla konabilir. Ultrasonografik değerlendirme ile tanı kesinleştirilir. Myomların ayırıcı tanısında gebelik, yumurtalık kistleri, pelvis içinde veya karın boşluğunda kitle oluşturan diğer tümöral oluşumlar, pelvik böbrek, urakhal kist ve üriner retansiyon gibi durumlar dikkate alınmalıdır. <p dir=</p>
+<h2>Tedavi</h2>
+<p>Myomların asıl tedavisi cerrahidir. Tedavide dikkate alınan özellikler myomun şikayete neden olup olmadığı ve büyüklüğüdür. Myomun çapı 5 cm’den azsa ve şikayete neden olmuyorsa ve hızlı büyümüyorsa 6 aylık aralarla kontrol edilmesi yeterlidir. Cerrahi girişime gerek olmayabilir. Eğer myom büyükse veya şikayetlere neden oluyorsa cerrahi girişim gerekir. Hızlı büyüyen myomlar dikkatle değerlendirilmelidir. Çünkü bu kitle sarkom gibi malign (kötü huylu) tümör olabilir. <p dir=</p>
+<p>Cerrahi tedavide hastanın yaşı ve doğurganlığını tamamlayıp tamamlamdığı dikkate alınmalıdır. Genellikle 40 yaş altı hastalarla, 40 yaş üstü olsa bile çocuk doğurma isteği olan hastalarda sadece myomların alınması olan myomektomi operasyonu yapılır. Kırk yaş üstü hastalarda 45 yaşa kadar uterusun myomlarla birlikte alınması, buna karşılık yumurtalıkların bırakılması önerilebilir. Böylece uterus alındığı için hastaların adet kanaması olmayaca ancak yumurtalıkları kaldığı için menopoza da girmeyecektir. Uterus alındığı için myomların tekrarlama olasılığı da ortadan kalkacaktır. Hasta 45 yaşın üstündeyse uterus ile birlikte yumurtalıkların da alınması önerilir. Böylece ileride yumurtalık kanseri gibi ciddi sorunlarla karşılaşma riski ortadan kaldırılır. Ancak yumurtalıklar alındığı için hasta menopoza girer. Ancak 45 yaştan sonra menopoz yaşı zaten yakın olduğu için bu şekilde ameliyat yanlış olmaz. Myom varlığında genel olarak özetlenen bu ameliyat şekilleri hakkında hasta bilgilendirilmeli, tartışılmalı, öneride bulunulmalı, ancak uterus ve yumurtalıklarda patoloji yoksa ameliyat şekli kararı hastaya bırakılmalıdır. Gebelik sonunda sezaryen sırasında myom ameliyatı istisnalar dışında yapılmamalıdır. Eğer myomlar karın boşluğuna doğru çıkıntı yapan subseröz veya saplı myomsa myomektomi denenebilir. Bunun dışındaki lokalizasyonlardaki myomları çıkarmaya çalışmak tehlikelidir. Çünkü durdurulamayan kanamalara yol açabilir. Kanama durdurulamazsa da uterusun alınması gerekebilir. <p dir=</p>
+<p>Myomların ilaçla tedavisi yoktur. Ancak ameliyat öncesi rahimin korunmasının şart olduğu durumlarda GnRH agonistleri kullanılabilir. Bu ilaçlar geçici olarak menopoz durumu oluşturup myomların biraz küçülmelerine sebep olurlar. Böylece myomektomi operasyonu daha kolay olabilir. Bu ilaçlar bırakıldıktan sonra kısa sürede myom tekrar eski boyutuna döner. Bu nedenle bu ilaçlar myomu tedavi etmek için değil, hastayı operasyona daha uygun hale getirmek amacı ile kullanılmalıdır. Ayrıca kanamalarda hormon preparatları kullanmak, ağrı kesicilerle ağrıları azaltmak mümkündür. Ancak bu ilaçlar şikayetleri sadece kullanıldıkları dönemde azaltırlar. Myomun kesin tedavisi cerrahidir. <p dir=</p>
+<p>Myomektomi yapılan hastalarda rahim duvarı kesilip uterusun iç kısmına geçilmişse en az 1 yıl gebelikten korunması önerilmelidir. Çünkü gebeliğin ilerlediği dönemlerde bu kesi yerinde yırtık oluşabilir ve bu durum hem bebeğin hem de gebenin hayatını tehdit edebilir. Myomektomiden sonra myomların tekrarlaması sıklıkla mümkündür. Menopozdan sonrası genellikle myomların büyümesi durur. <p dir=</p>` },
+"oligahidramnios": { title: "Oligohidramnios", content: `<h2>Tanım</h2>
+<p>Amnios sıvısının gebelik haftası için normal kabul edilen değerden daha az olmasıdır. Genellikle 16. gebelik haftasından itibaren 36. gebelik haftasına kadar amnios sıvı miktarı 1 litre civarındadır. Otuzaltıncı gebelik haftasından itibaren azalmaya başlar. <p dir=</p>
+<p>Amnios sıvısının 15. gebelik haftasından itibaren ana kaynağı hemen hemen tamamen fetusun idrarıdır. Fetus bu sıvıyı sürekli olarak içer ve eksilen sıvıya yakın miktarda idrarla amnios boşluğunu tekrar doldurur. Böylece amnios sıvısı sürekli değişim gösteren aktif bir döngü içindedir. Zaman zaman amnios sıvısının miktarı azalabilir. Azalan amnios sıvısı gebelik haftası dikkate alındığında belirlenen ölçülerin altına inerse oligohidramnios olarak değerlendirilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Oligohidramnios tanısı ultrasonografik ölçümle konabilir. Ultrasonografik değerlendirmede amniotik sıvı indeksi yapılır. Bu indekste gebenin uterusu (+) şeklinde dört bölüme ayrılır. Her bir bölümde ultrason probu zemine dik tutularak vertikal planda uygun şekilde konarak en geniş amnios sıvı boşlukları ölçülür. Sonuçta ölçülen bu boşluk çapları toplanır ve toplanan bu değer amnios sıvı indeksi (ASİ) adını alır. İndeksin değerlendirilmesi gebelik haftalarına göre hesaplanan ASİ değerleri nomogramına bakılarak değerlendirilir. Ancak genel olarak bütün gebelik haftaları için 100 mm’nin üstü normal kabul edilir, 70-100 mm arası ara değerdir, 70 mm‘nin altındaki değerler oligohidramnios olarak değerlendirilir. Ölçüm yapılan en büyük vertikal cepte 20 mm’nin altında değerle karşılaşılırsa bu da aynı şekilde oligohidramnios olarak kabul edilebilir. Amniotik sıvı indeksinde tesbit edilen toplam ölçü 30 mm’nin altındaysa bu amnios sıvısının olmadığı anlamına gelen anhidramnios ismini alır. Normal gebeliklerdeki gebelik haftalarına göre hasaplanan amnios sıvı indeksi değerleri aşağıda verilmiştir. <p dir=</p>
+<p>Oligohidramnios tanısı konduğunda akla öncelikle amnios ıvısının dışarıya aktığı erken membran rüptürü gelmelidir. Membran rüptürü olmadığı anlaşılırsa amnios sıvısının azalmasına neden olan diğer durumlar gözden geçirilmelidir. Bunun en önemli sebebi üriner sistemde idrarın oluşumunun oldaığı böbreklerle ilgili anomalilerdir. Ayrıca böbrekler normal olsa bile oluşan idrarın dışarıya atılmasında görev yapan ureterler, mesane ve uretra ile ilgili anomalilerde oligohidramniosa yol açabilir. Çünkü idrarın dışarıya akışı belli bir seviyede engellenmiştir. Oligohidramniosa sebep olan diğer bir durum fetal hipoksidir. Fetusa herhangi bir sebeple az oksijen gidince fetus bu durumdan az etkilenmek amacı ile beyin, kalp ve adrenaller gib yaşamsal önemi fazla olan organlara fazla kan göndermeye çalışır. Bu organlardaki damarlar genişlerken diğer organlardaki damarlar kasılma ile daralarak kan akışını azaltır. Böbreklere kan az geldiği için idrar oluşumu da azalır. Böylece oligohidramnios gelişebilir. Gebenin aldığı bazı ilaçlarda (ibuprufen, indometazin vb) amniotik sıvı miktarında azalmaya yol açabilir. Gebeliğin 36. haftasından sonra amnios sıvı miktarında fizyolojik azalma olur. Bu durumun bilinmesi ve amnios sıvı azalmasının oligohidramnios olarak değerlendirilmemesi gerekir. Bunların dışında bazen oluşan oligohidramniosun belli bir nedeni olmayabilir. <p dir=</p>
+<p>Oligohidramniosun sebebi çok önemlidir. Örneğin bilateral multikistik displastik böbrek gibi bir neden sebep olarak karşımıza çıkarsa bu anomali nedeniyle bebeğin doğum sonrası yaşama şansı yoktur. Bunun gibi oligohidramniosa sebep olan patolojik durumlar fetal prognozda elbetteki önemlidir. Ancak bunun da dışında sebep olan patolojiyi bir kenara bıraksak bile tek başına oligohidramnios varlığı da fetal prognozu etkiler. Çünkü amniotik sıvının normal miktarda olması gebeliğin devamı için şarttır. <p dir=</p>
+<p>Fetus amnios sıvısını sürekli olarak içer. İçilen amnios sıvısı hem yemek borusu yoluyla mideye, hem de nefes borusu ile belli bir seviyeye kadar akciğerlere gider. Midede ki amnios sıvısı barsaklara geçip, orada emilir. Emilen sıvı fetusun kanına karışıp kanla bebeğin dokularında ve plasentada dolaştıktan sonra böbreklerden süzülüp tekrar idrar olarak amnios boşluğuna atılır. Bu nedenle bütün bu organların gelişimlerini tamamlamaları için amniotik sıvı olmazsa olmaz öneme sahiptir. <p dir=</p>
+<p>Özellikle oligohidramnioslu bir gebe yirmili gebelik haftalarının ilk yarısından itibaren amnios sıvı miktarı artmadan gebeliğini sürdürürse akciğerlerinin gelişmesi beklenmez. Böyle bebeklerin doğumdan sonra solunum yetmezliği nedeniyle yaşama şansı yoktur. <p dir=</p>
+<p>Normal miktardaki amnios sıvısı fetusu hem ısı değişimleri hem de darbe benzeri travmalara karşı korur. Ayrıca amnios sıvısının oluşturduğu ortamda fetus rahatça hareket ederek kas ve iskelet sistemini geliştirir. Eğer yeterince sıvı olmazsa fetus hareket edemediği için vücudunda çeşitli deformitelerle doğar. <p dir=</p>
+<p>Amnios sıvısı kordonun sıkışmasını önler. Sıvı miktarı az olduğunda kordon sıkışabilir ve sıkışık kordonda kan akımı azalır hatta durabilir. Bu da fetusun yeterince oksijen ve besin alımını engellediği için büyüme ve gelişme geriliğine ve hatta ölümüne yol açabilir. <p dir=</p>
+<p>Sonuç olarak oligohidramniosun ciddi bir gebelik komplikasyonu olduğu söylenebilir. Oligohidramniosa sebep olan anomali veya patolojiler bir yana sadece oligohidramniosun varlığı da fetal prognozu kötüleştirir. Özellikle yirmili gebelik haftalarının ilk yarısında gebelik oligohidramnios ile devam ediyorsa sebebe yönelik gerekli tetkik ve tedaviler yapıldıktan sonra gebeliğin sonlandırılması da aileye önerilebilir. Çünkü her şeyin ötesinde solunun yetersizliği nedeniyle doğum sonrası bebeğin yaşam şansının yok denecek kadar az olduğu bilinmelidir. <p dir=</p>` },
+"omfalosel": { title: "Omfalosel", content: `
+<img src="images/omfalosel_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/omfalosel_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Tanım</h2>
+<p>Karın duvarında, umblikal kordonun fetusa giriş yerinde (fetusun göbeğinde) oluşan genişlemeye bağlı olarak karın içi organların fıtıklaşmasıdır. Bu fıtıklaşma, koruyucu viseral zar içinde olmaktadır. Fıtık kesesi değişken genişlikte olabilir ve amnion ile periton adı verilen 2 katlı koruyucu tabakayla çevrelenir. Omfalosel kesesi içinde genellikle ince barsaklar ve karaciğere rastlanır. Daha seyrek olarakta dalak, mesane, mide ve kalın barsaklarında kese içinde yer alabildiği görülür. Karaciğer fıtık kesesi içindeyse ekstrakorporeal karaciğer ile omfalosel, karaciğer fıtık kesesi içinde değilse intrakorporeal karaciğer ile omfalosel olmak üzere 2 şekilde tanımlanır. Normal gebeliklerde, ince barsaklar gebeliğin 12. haftasına kadar umblikal kord içine fıtıklaşmış şekilde bulunur ve bu haftanın sonrasında karın boşluğuna geçer. Yani 12. gebelik haftasına kadar ince barsaklarda görülen fıtıklaşma fizyolojiktir ve omfalosel olarak değerlendirilmez. Bu dönemin sonrasında ince barsaklarda fıtıklaşma görülmesi ise omfalosel olarak değerlendirilir. İnce barsaklardaki bu duruma karşılık normal yapıdaki karın duvarı varlığında karaciğer hiçbir zaman karın boşluğunun dışında görülmez. Karaciğerin dışarıda olması halinde, gebelik haftası ne olursa olsun bu durum omfalosel olarak değerlendirilir. Bu durumda tanı 11. gebelik haftasından itibaren konabilir. <p dir=</p>
+<h2>Görülme sıklığı</h2>
+<p>Omfalosel görülme sıklığı yaklaşık 1/4000 gebelik olarak bildirilmiştir. Erkek fetuslarda dişi fetulara göre daha sık rastlanır. Ayrıca gebe yaşının artmasıda, omfalosel görülme riskini artırır. <p dir=</p>
+<h2>Tanı</h2>
+<p>Ultrasonografik değerlendirme ile tanı konabilir. Umblikal kordon giriş yerinde karın duvarında defekt, bu lokalizasyonda içinde karın organlarını bulunduran değişik büyüklükte kese, fetusun karın boşluğunda asit ve varsa diğer anomalilerin görülmesi ile tanı koymak mümkündür. Bunlara ilave olarak sıklıkla polihidramnios (amnios sıvısının normalden fazla olması) görülebilir. Omfalosel kesesinin yanında kordon damarlarının ve bulunduğu yerde karaciğer damarlarının görüntülenmesi için renkli doppler kullanılması tanı açısından önemli olabilir. Omfalosel tanısı koyarken özellikle Gastroşizis ile ayırıcı tanısının iyi yapılması gerekir. <p dir=</p>
+<p>Diğer anomalilerle birliktelik: Omfalosel olgularının 2/3’ünde ilave anomalilerde rastlanır. Bu anomalilerin yaklaşık %30 - %50’si ventriküler ve atrial septal defekt, Fallot Tetralojisi gibi kalp anomalileri, %40’ı ise barsak malrotasyon, diafragma herernisi, duodenal atrezi, anus imperforatus gibi sindirim sistemine bağlı anomalilerdir. Bunların dışında kas-iskelet sistemi anomalileri, ürogenital sistem anomalileri, ensefalosel ve spinal kord bozuklukları gibi santral sinir sistemi anomalileri ile umblikal kordon kistleride görülebilir. <p dir=</p>
+<p>Omfalosel olgularında özellikle Trizomi-18 başta olmak üzere, Trizomi 13, Triploidi, Turner sendromi gibi kromozomal anomaliler %30-40 sıklıkla görülebilir. Buna karşılık tüm Trizomi-18’li fetusların %22’sinde, Trizomi-13’lü fetusların % 9’unda ve triploidili fetusların 12’sinde, Omfalosel olduğu bildirilmiştir. Omfalosele ilave anomali olarak umblikal kord kistinin görülmesi, kromozom anomali riskini artırır. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Eğer kromozomlar normalse ve fetusun hayatını tehdit eden ilave büyük anomali yoksa sağkalım (sürvi) %80-%90 olarak bildirilmiştir. Canlı doğum sonrası yapılan takip çalışmalarında 1 yıl sonraki sürvi oranı %69-%79 olarak bildirilmiştir. Oysa ciddi ilave anomalilerin olduğu vakalarda %80 sıklıkla ölü doğum görülür. Hatta kromozom anomalisi veya büyük kalp-damar anomalisi varlığı durumunda ölü doğum ile karşılaşma sıklığı hemen hemen %100’dür. Karaciğerin kese içinde olup olmaması ve kese büyüklüğüde prognozda önemlidir. Karaciğerin normal yerinde (karın boşluğu içinde) olduğu, küçük keseli omfalosellerde ilave anomali yoksa prognozun daha iyi olduğu söylenebilir. Karaciğerin fıtığa dahil olduğu dev boyutlu omfalosel keselerinde solunum yetmezliği oluşur ve bu durum prognozun daha da kötü olmasına yol açar. <p dir=</p>
+<p>Omfalosel olgularında, kesenin korunması ve uygun cerrahi operasyon şartlarının hazırlanması amacıyla doğumun sezaryen ile yapılması birçok araştırmacı tarafından önerilmektedir. Ancak dev boyutlu kese olmadıkça vaginal doğumun sakınca oluşturmadığını ileri süren otörlerde vardır. Doğum şekli olarak hangi yol seçilirse seçilsin, doğumun yenidoğan yoğun bakım ve yenidoğan cerrahi hizmetlerinin verilebileceği bir merkezde yapılması ve doğum travayında gebenin ve fetusun sürekli olarak monitörize edilerek izlenmesi gerekir. <p dir=</p>` },
+"over-kisti": { title: "Over Kisti", content: `<h2>Tanım</h2>
+<p>Over (yumurtalık) kisti, dişi fetuslarda görülebilen iyi huylu, fonksiyon kistleridir. Dişi fetuslarda karın boşluğunun alt kısmında bulunur. Genellikle tek taraflıdır. Değişik büyüklüklerde olabilir. Bazen 10 cm’lik çapa kadar ulaşabilir. Kist rüptüre olursa karın boşluğunda asit görülür. <p dir=</p>
+<p>Over kisti olan olguların %10’luk bölümünde polihidramnios (amnios sıvısının normalden daha fazla olması) gelişebilir. Polihidramnios oluşumunun sebebi bilinmemekle birlikte kistin göbek kordonuna ve barsaklara baskı yapmasının bu duruma yol açabileceği ileri sürülmüştür. <p dir=</p>
+<p>Over kistleri artan hormon seviyelerine fetusun overlerinin cevabı sonucu oluşur. Bu hormonlar ya plasenta kaynaklı HCG hormonu, ya gebeden geçen östrojen hormonu veya fetusun kendi yaptığı gonadotrop hormonlarıdır. Bu hormonların artması sonucu fetusta over kisti oluşabilir. <p dir=</p>
+<p>Over kisti tanısı alan olgularda çoğunlukla fetal hipotiroidizm görülür ve guatr oluşabilir. Özellikle diabet, Rh uyuşmazlığı, preeklampsi gibi gebelik toksemileri gibi gebe ile ilgili problemlerin varlığı durumunda fetusta over kisti görülme riskinin arttığı bildirilmiştir. <p dir=</p>
+<p>Dişi fetusların yaklaşık 1/3’ünde over kisti görüldüğü bildirilmiştir Ancak bunların çoğunun mikroskopik ölçüde olduğu, ancak az bir bölümünde kistlerin ultrasonografide görülebilir boyuta ulaştığı belirtilmiştir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanı üçüncü trimesterde ultrasonografi ile konabilir. Üçüncü trimesterden önce görülen kistler muhtemelen over kisti değildir. Ultrasonografide fetusun karnının alt bölümünde basit veya kompleks yapıda kist görülebilir. Basit kistler genellikle tek bölümlü, hipoekojen, damarsız ince duvarlı kistlerdir. <p dir=</p>
+<p>Kompleks kistler ise kist içine kanama olmasına bağlı olarak değişik ekojenitelidir. Bunların görüntüsü kanamanın miktarına ve kanama zamanına bağlı olarak değişir. Ayrıca kist torsiyonları da (kistin kendi etrafında dönmesi) görülebilir. Özellikle çapı 6 cm’den büyük olan kistler torsiyon açısından yüksek riske sahiptir. Zaman zaman da kistler rüptüre olabilir ve bu durumda fetusun karın boşluğunda asit asit görülebilir. <p dir=</p>
+<p>Ayırıcı tanıda urachal kist, barsak duplikasyon kisti, mezenterik kist, koledok kisti gibi karın içi kistler, barsak dilatasyonu, mekonyum psödokisti gibi sindirim sistemi anomalileri, hidronefros, multikistik displastik böbrek gibi üriner sistem anomalileri, kistik teratom, lenfanjioma gibi karın içi neoplazik hastalıklar, hidrokolpos gibi genital sistem patolojileri akla gelmelidir. Ayırıcı tanıda bazan MR yapılması gerekli olabilir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Kistler genellikle doğumdan önce kendiliğinden kaybolabilirler. Çapı 6 cm’den büyük olan kistlerde kanama, torsiyon, damarsal yetersizliğe bağlı infarktus, barsaklara baskı sonucu barsaklarda tıkanıklık ve kist rüptürü gibi komplikasyonlarla karşılaşılabilir. Kist çapı daha büyükse fetusun karın çevresini genişleterek zor doğuma yol açabilir. Bu durumda ya doğumdan hemen önce kist içindeki sıvı özel iğneler ile boşaltılabilir veya doğum sezaryen ile yapılabilir. Gebelikte kistin boşaltılması tartışmalıdır. Çünkü kist sıklıkla tekrarlar. Ayrıca kist için kanama olabilir, infeksiyon gelişebilir. Ayrıca bu girişim erken doğuma yol açabilir. Bu nedenle özel durumlar dışında kistin boşaltılası çok önerilmez. Ancak kistin barsaklara obstrüksiyon yapması gibi durumlarda gebelikte kist boşaltılabilir. Doğum sonrası ultrasonografi ile kist değerlendirilmelidir. Daha sonra bebek aylık kontrollerle görülerek kistin kaybolması izlenmelidir.Genellikle doğumdan sonra birkaç ay içinde kistler kaybolur. Ancak doğumdan 2 yıl sonra kaybolan kistlerin var olduğu da unutulmamalıdır. Eğer torsiyon (kistin kendi etrafında dönmesi) yoksa prognozun iyi olduğu söylenebilir. Ancak torsiyon varsa veya üriner sistem yada barsaklar üzerine tıkayıcı tarzda baskı yaparsa acil cerrahi girişim gerekebilir. Üriner sistem veya barsaklara obstrüksiyon nedeniyle yapılan cerrahide genellikle over korunup kist çıkartılır. Buna karşılık kist torsiyonu sonucu kanamalı infarktus oluşmuşsa kistle birlikte overin de çıkartılması gerekli olabilir. <p dir=</p>` },
+"plasenta-previa": { title: "Plasenta Previa", content: `<h2>Tanım</h2>
+<p>Plasentanın tamamen veya kısmen uterusun alt kısmında bulunmasıdır. Plasenta normalde doğum yolunu kapatmayacak şekilde uterusun daha üst bölümlerinde bulunur. Gebeliklerin yaklaşık 1/200’lik (% 0.5) bölümünde ise plasenta daha aşağıda, doğum yolunu tamamen veya kısmen kapatacak şekilde yerleşir. Bu durum plasenta previa adını alır. Plasentanın yerleşim yeriyle ilgili bu anomalinin 4 derecesi vardır. Birincisi aşağı yerleşimli plasenta adını alır. Burada plasenta rahim ağzına yakın yerleşmiştir. Ancak rahim ağzını kapatmamıştır, plasentanın kenarı rahim ağzının biraz yukarısında yer alır. İkincisi plasenta previa marginalis adını alır. Burada plasentanın kenarı rahim ağzı hizasındadır. Üçüncüsü plasenta previa parsiyalis adını alır. Plasentanın kenarı rahim ağzını kısmen kapatmıştır. Dördüncü derece ise plasenta previa totalis adını alır. Plasenta previa totaliste rahim ağzının tamamı plasenta tarafından kapatılmıştır. Plasenta previa vakalarının yaklaşık %7’sinde plasenta akreata veya daha ileri boyutu olan plasenta inkreata ve plasenta perkreata görülebilir. Bunlar plasentanın rahim duvarına değişik derecelerde daha derinlemesine tutunması şeklinde anomalilerdir. <p dir=</p>
+<p>Plasenta previanın kesin bir nedeni yoktur. Ancak bazı durumların varlığında daha sık görülür. Örneğin eski sezaryen ameliyatları riski 2-5 kat artırır. Riski artıran diğer faktörler olarak üçten fazla doğum yapmış olmak, 35 yaş üstü gebelik, geçmişte küretaj yaptırmış olmak, düşük yapmış olmak, sigara içmek, uyuşturucu kullanmak vb durumlar sayılabilir. <p dir=</p>
+<p>Klinik bulgular: Genellikle ikinci trimesterin geç dönemi veya üçüncü trimesterin erken dönemlerinde yani 24-34. gebelik haftalarında ağrısız oluşan kanama en sık görülen şikayettir. Kanama lekeler halinde olabileceği gibi nadiren öldürücü boyutta ani ve bol kanama şeklinde de olabilir. Hafif kanamalar genellikle kendiliğinden durur fakat sık aralıklarla tekrarlanır. Plasenta previada kanayan bebek değil gebedir. Plasenta previa kanamalarının %20’sinde uterusta kasılmalar görülebilir. Bu gebelerde doğum sonrasında da ağır ve uzun süreli kanamalar olabilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Plasenta previada tanı ulytrasonografi ile kolaylıkla konabilir. Karın duvarından yapılan trans abdominal ultrasonografi tanı için genellikle yeterlidir. Zaman zaman mesanenin boşaltılması gerekli olabilir. Bazen vaginal yoldan yani trans vaginal ultrasonografi ile tanının doğrulanması gerekli olabilir. <p dir=</p>
+<p>Yönetim ve tedavi: Preterm fetuslu ama aktif kanaması olmayan plasenta previa olguları yakın gözlem ile izlenmelidir. Yatak istirahati genellikle gerekebilir. Bazı durumlarda gebenin uzun süre hastanede yatması gerekli olabilir. Kanama tamamen kesilmiş ve fetus iyi durumdaysa gebenin taburcu edilmesi uygun olabilir. Ancak burada gebenin ve ailesinin yeterince aydınlatılması ve kanama olması durumunda acilen hastaneye getirilmesinin mutlaka gerekli olduğunun belirtilmesi önemlidir. Kanama varlığında kan miktarı sürekli izlenir. Gerektiğinde gebeye kan ve kan ürünleri verilebilir. Gebede Rh uyuşmazlığı varsa kanama sonrası anti-D (kan uyuşmazlığı iğnesi) yapılmalıdır. <p dir=</p>
+<p>Plasenta previada alt segment yerleşimli veya plasenta previa marginalisli olgularda bazı istisnalar hariç doğum şekli sezaryen olmalıdır. Eski sezaryenli olgularda plasenta rahimdeki sezaryen yapılan yere implante olmuşsa plasenta akreata vb durumlarla karşılaşılabileceği unutulmamalıdır. Unutulmaması gereken diğer bir hususta plasenta previada doğumdan sonra süre ve miktar açısından normalden fazla kanama olabileceğidir. Çünkü uterusun alt kısımları doğum sonrası diğer bölümler kadar iyi kasılamaz ve dolayısıyla damar ağızlarını yeterince kapatamayabilir. Zaman zaman doğum sonrası durdurulamayan kanamalardan sonra rahimin alınması bile gerekli olabilir. Bu durum özellikle plasenta akreata, plasenta inkreata ve plasenta perkreata varlığında söz konusudur. <p dir=</p>` },
+"posterior-uretral-valv-sendromu": { title: "Posterior Uretral Valv Sendromu", content: `<h2>Tanım</h2>
+<p>Posterior uretral valv sendromu (PUVS), uretra içindeki membranın sebep olduğu obstrüksiyondur. Uretradaki obstrüksiyon, mesane çıkışından hemen sonra görülür. Obstrüksiyon çoğunlukla tam değildir, kısmi idrar geçişi mümkün olabilmektedir. Bu durum sadece erkek fetuslarda görülür. Çocukluk çağı ciddi obstrüktif üropatilerin en sık sebebidir. Görülme sıklığı değişik çalışma gruplarınca 1/5000 ile 1/8000 erkek fetus olarak bildirilmiştir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanıda karakteristik ultrasonografi bulgusu kalın duvarlı sıvı ile dolu, büyük çaplı mesane ile mesane çıkışındaki uretrada dilatasyon varlığıdır. Genişleyen mesane bazen bütün karın boşluğunu dolduracak büyüklüğe ulaşabilir. Tipik anahtar deliği manzarası görülür. Ureterler dilate olabilir. Ayrıca olaya sekonder olarak gelişen çift taraflı hidronefrozda görülebilir. <p dir=</p>
+<p>Bulgular obstrüksiyonun derecesi ile farklılıklar gösterebilir. Obstrüksiyonun ileri boyutta olduğu vakalarda artan basınca bağlı fibrozis oluşur. Bu renal (böbreğe ait) displaziye yol açar. Renal displazi, ultrasonda fibrozise ait ekojenik parankim dokusunun görülmesi ile tanı alır. Displazinin derecesi ile hidronefrozun derecesi arasında bağlantı yoktur. Hidronefroz olmadanda böbrek displazisi görülebilir. <p dir=</p>
+<p>Bir diğer önemli ultrasonografik bulgu renal kortikal kisttir. Renal kortikal kist displastik böbreklerin %44’ünde görülür ve kötü prognozla ilişkilidir. Geri dönüşümsüz böbrek hasarını gösterir Kötü prognozu gösteren bir diğer bulgu da renal atrofidir. <p dir=</p>
+<p>Çeşitli derecelerde oligohidramnios (amniotik sıvının az olması) görülür. Oligohidramnios varlığı da kötü prognozu gösterir. Bu durumda hem bebekte şekil deformasyonları, hem de akciğer gelişimi yeterince olmayacağı için solunum yetmezliğine bağlı %80 sıklıkla ölüm görülür. Bazen mesanenin rüptürü (delinmesi) sonucu idrar vücut boşluklarına boşalabilir. Bu durum karın boşluğunda olursa üriner asit, göğüs boşluğunda olursa ürinotoraks adını alır. Ayrıca karın boşluğunda kireçlenmeler (kalsifikasyonlar) sözkonusu olabilir. Zaman zaman da böbrek toplayıcı sisteminin rüptürüne bağlı olarak ürinoma görülebilir. <p dir=</p>
+<p>Posterior uretral valv sendromu olgularında %43 sıklıkla üriner sistemin dışında başka sistemlere ait anomalilerde birlikte bulunabilir. Bunlar en fazla kalp anomalileridir. Ayrıca omurga, anüs, yemek ve soluk borusu ile kol ve bacaklara ait anomalilerde sıklıkla posterior uretral valv sendromuna eşlik edebilir. <p dir=</p>
+<h2>Ayırıcı tanı</h2>
+<p>Posterior uretral valv sendromunda ayırıcı tanda uretral atrezi, Prune belly sendromu, megasistis mikrokolon ve cloakal malformasyon akla gelmelidir. <p dir=</p>
+<p>Uretral atrezi posterior uretral valv sendomuna benzer ancak burada obstrüksiyon tamdır. Oligohidramniosun derecesi ciddidir. Erkek ve dişi fetuslarda eşit oranda görülebilir ve görülme sıklığı çok daha azdır. <p dir=</p>
+<p>Prune belly sendromunda karın duvarı kas yapısı ya çok gevşektir veya yoktur. Mesane duvarı incedir, uretranın tamamı dilatedir yani genişlemiştir ve posterior uretral valv senromunda ki tipik anahtar deliği görüntüsü burada yoktur. <p dir=</p>
+<p>Megasists mikrokolonda mesane ince duvarlıdır, posterior uretra dilate değildir, amniotik sıvı miktarı normaldir veya hafif artmıştır ve dişi fetuslarda görülme sıklığı yaklaşık 4 kat daha fazladır. <p dir=</p>
+<p>Cloacal malformasyonda ise üriner çıkış obstrüksiyonu nadiren görülür. Anomali mesane, rektum, genital organlar, perine ve anusü kapsayan kompleks yapıdadır. Erkek ve dişi fetuslarda eşit sıklıkla görülür. <p dir=</p>
+<h2>Prognoz</h2>
+<p>PUVS’da prognoz obstrüksiyonun derecesine göre değişir. Gebelikte tanı konan olgularda ölüm oranı değişik çalışma gruplarınca %23 ile %54 oranlarında bildirilmiştir. Canlı doğumda ise bu sebeple doğum sonrası bebek bebek ölüm oranı %8 olarak verilmiştir. Doğum sonrası takip edilen bebeklerde ilk 5 yıl içinde % 45 sıklıkla böbrek yetmezliği gelişir. Ayrıca 24. gebelik haftasından önce tanı konması, oligohidramnios, böbrek displazisi göstergesi olan kortikal kist ve kortikal ekojenite artışı gibi faktörlerin varlığı kötü prognozu gösterir. Bu dönemlerde oligohidramnios mevcutsa, doğuma kadar fetus sağ kalsa bile doğum sonrası akciğer hipoplazisi sonucu solunum yetmezliğinden bebek ölümü görülür. <p dir=</p>
+<p>Gebeliğin takibi: İkinci trimasterde ciddi oligohidramnios varsa, mesane çok büyükse, çift taraflı hidronefrotik ekojenik böbrek varsa prognoz kötüdür. Doğum yaptırılsa bile akciğer yetmezliğinden bebek ölümü kaçınılmazdır. Bu nedenle bu gebelerde özellikle 24. haftanın öncesinde tanı konduğunda, aileye bilgi verilerek gebeliğin sonlandırılması önerilebilir. Buna karşılık yeterli amniotik sıvı varsa ve böbrekteki patoloji belirgin değilse 38-40. haftalara kadar beklenebilir. Bu dönemde 36. haftaya kadar 2 hafta arayla, 36. haftadan sonra ise haftalık kontrollerle gebe izlenir. Otuzikinci haftanın sonrasında belirgin oligohidramnios gelişirse gebe doğurtulur ve bebekte endoskopik valv ablasyonu yapılabilir. Otuzikinci haftanın öncesinde 3-4 gün arayla seri mesane drenajları yapılabilir. Alınan idrar mesaneyi küçülttüğü gibi aynı zamanda idrar analizi ile böbrek fonksiyonu hakkında bilgi edinmemizede yardımcı olur. Buna göre prognozun iyi veya kötü olduğu söylenebilir. <p dir=</p>
+<p>Ayrıca mesaneye şant konulmasıda önerilmiştir. Şantın mesane dekompresyonunu ve hidronefroz oluşumunun önleme fonksiyonu yanında amniotik sıvı miktarını artırmak ve dolayısı ile akciğer hipoplazisini önleme açısından potansiyel yararı olduğu iddia edilmiştir. Ancak denenen şantlarda sıklıkla fetusun şantı çekip çıkarması görülmüştür. Bu durumlardada şant yerine vesikostomi önerilmiştir. Ancak gerek şant konulmasının gerekse vesikostominin beklendiği kadar verimli olmadığı da bilinmektedir. Ayrıca komplikasyon riski fazla olan uygulamalardır. Örneğin infeksiyon, şantın yanlış yere yerleştirilmesi, karın duvar yaralanmaları, erken doğum ve hatta fetusun ölümü görülebilir. Plasentanın ön duvarda olduğu durumlarda da şant yerleştirmenin relatif kontrendikasyonları vardır. Sonuçta böyle gebelikler takip edilirken obstetrisyenin yanında pediatristler ve pediatrik ürolojistler birlikte karar vermelidir. Doğum bu ekibin bulunduğu, yoğun bakım ünitesi ve cerrahi girişimlerin yapılabileceği ünitelerde gerçekleştirilmelidir. <p dir=</p>` },
+"renal-agenezi": { title: "Renal Agenezi", content: `<h2>Tanım</h2>
+<p>Renal agenezi böbreklerin tek veya çift taraflı yokluğu yani oluşmamasıdır. Renal Agenezinin görülme sıklığı tek taraflı böbrek yokluğunda 1/1000 canlı doğum olarak bildirilmişken çift taraflı böbrek yokluğu için 1/4000 canlı doğum olarak bildirilmiştir. Olguların cinsiyete göre dağılımları ele alındığında tek taraflı renal agenezi görülme sıklığı kız-erkekte heme hemen eşittir. Oysa çift taraflı renal agenezi erkek fetuslarda kızlara gör 3 kat daha fazla rastlanır. Renal agenezinin gerçek sebebi bilinmemektedir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Ultrason muayenesinde çift taraflı renal agenezide her iki tarafta böbrekler görülmez. Ayrıca mesane görüntülemez ve amniotik sıvı miktarı çok azdır. Amniotik sıvı miktarı az olduğu için ultrasonografi görüntüsü iyi olmayabilir. Tek taraflı renal agenezide ise sadece o tarafta böbrek görülmez ve gerek mesanenin görünürlüğü ve gerekse amniotik sıvı miktarı çoğunlukla normaldir. İster tek taraflı, isterse çift taraflı renal agenezi olsun, böbreküstü bezleri normal yerlerinde görüntülenirler. Tek taraflı renal agenezi tanısı konduğunda fetusun pelvisi dikkatlice değerlendirilmelidir. Çünkü pelvik böbrek olabilir. <p dir=</p>
+<h2>Ayırıcı tanı</h2>
+<p>Özellikle ikinci trimesterde çift taraflı multikistik displastik böbrek veya infantil polikistik böbrek hastalığı gibi amnios sıvısının çok azaldığı durumlarda ayırıcı tanı gerekir. Ayrıca mesane çıkışını kapanması sonucu idrar akışının engellendiği patolojik durumlarda, erken membran rüptüründe, bazı kromozom hastalıkları veya plasental yetmezliğin olduğu durumlarda da amnios sıvı miktarı çok azalabilir. Bu durumlarda da renal agenezinin ayırıcı tanısı gerekli olabilir. <p dir=</p>
+<p>Birlikte görülebilen anomaliler: Çift taraflı renal agenezilerin % 50’sinden fazlasında ilave anomalilerde görülebilir. Bunların en sık (%25) görüleni kalp anomalileridir. Bunun dışında omurga, anal atrezi (anüsün oluşmaması) yemek borusu ve soluk borusu ile ilgili anomaliler, böbrek anomalileri, parmaklarla ilgili anomaliler ve dişi fetuslarda genital sistamle ilgili anomaliler sıkça rastlanan diğer anomalilerdir. <p dir=</p>
+<p>Ayrıca daha seyrak olarak nöral tüp defekti, mikrosefali, hidrosefali, sindirim sistemi anomalileri (duodenal atrezi, omfalosel vb) diafragma hernisi, yüz anomalileri görülebilir. İlave olarak nadiren Fraser sendromu, serebro-okulo-fasyal-iskelet senromu, Akrorenal-mandibular sendrom, Branchiootorenal sendrom gibi senromlarlada birlikte görülebilir. Bütün bunların dışında bilateral renal agenezide amniotik sıvının azlığına veya yokluğuna bağlı olarak akciğer gelişimi olmaz ve özellikle yüzünde kol-bacaklarında olmak üzere vücudunda çeşitli deformiteler görülür. <p dir=</p>
+<p>Bütün bu deformiteler amniotik sıvının tampone edici etkisi ortadan kalktığı için kompresyon sonucu oluşur. Yüzdeki değişiklikler Potter yüzü olarak adlandırılan tipik değişikliklerdir. Bunlar düşük kulak, çökük burun köprüsü, ezik burun vb şeklindedir. <p dir=</p>
+<p>Tek taraflı renal agenezi görüldüğünde ise diğer böbrekte ve üriner sistemde sıklıkla anomamaliler görülebilir. Bu anomalilerin en sık görülenleri vesiko-ureterik reflü, vesikoureterik junction obstrüksiyonu, ve pelviureterik junction obstrüksiyonudur. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Çift taraflı renal agenezide prognoz kötüdür. Doğum sonrası ilk birkaç günde hatta birkaç saatte bebekler solunum yetmezliğinden kaybedilir. Tek taraflı renal agenzide ise normal yaşam beklenir. Ancak bu bebeklerin de bir kısmının uzun süreli takiplerinde proteinüri, böbrek yetmezliği ve hipertansiyon ile karşılaşmaları mümkündür. <p dir=</p>
+<p>Gebeliğin takibi: Çift taraflı renal agenezi olgularında doğum sonrası ölüm kesin olduğu için bunlarda gebeliğin sonlandırılması önerilebilir. Çift taraflı renal agenezide kromozom anomali riski nadirdir. Bu nedenle kromozom analizi önerilmez. Aile gebeliğin sonlandırılmasını istemezse gebe normal takiple izlenir. Ancak fetal distress nedeniyle sezaryen kararı verilmez. Tek taraflı renal agenezi olguları ise normal gebeklik olarak izlenir. Doğum sonrası bebek özellikle üriner sistem açısından değerlendirilir ve takibe alınır. <p dir=</p>
+<p>Tekrarlama riski: Bilateral renal agenezide tekrarlama riski % 3 - % 6 arasındadır. <p dir=</p>` },
+"servikal-yetmezlik": { title: "Servikal Yetmezlik", content: `<h2>Tanım</h2>
+<p>Servikal kanalın internal os’unun (iç kısmının) gebelik esnasında ağrısız genişlemesi, dilate olmasıdır. Bu genişlemeye bağlı olarak genellikle gebeliğin ikinci trimesterinde serviks tamamen dilate olur ve fetus düşük veya erken doğumla kaybedilir. Fetusun düşmesinden önce çoğunlukla membranlar rüptüre olur. Etkili şekilde tedavi edilmezse bu durumbütün gebeliklerde tekrarlar. Servikal kanalın yetmezliğine sebep olan durum serviksi oluşturan bağ dokusunun zayıflığıdır. Genellikle bu zayıflığın sebebi bilinmez. Bununla birlikte servikse daha önceden yapılan küretaş, konizasyon, koterizasyon, amputasyon gibi travmalar zaman zaman sebep olarak karşımıza çıkabilir. Ayrıca gebeliklerinde DES olarak bilinen ilacı kullanan kadınların kızlarında da servikal yetmezliğe daha sık rastlanabilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>servikal yetmezliğin tanısı daha öncede bir veya daha fazla sayıda ikinci trimester düşüğünün olması ile konabilir. Ultrasonografik olarak serviksin kısalmasının ve hunileşmesinin görülmesi tanıya yardımcı olur. Özellikle vaginal ultrason probu ile servikal uzunluğun 16-18. gebelik haftaları arasında 25 mm’nin altına inmesi servikal yetmezliği düşündürür. <p dir=</p>
+<h2>Tedavi</h2>
+<p>servikal yetmezliğn tedavisi cerrahidir. Serklaj adı verilen operasyonla zayıf servikal dok kese ağzı gibi büzülerek dikilir. Böylece serviks güçlendirilmiş olur. Serklaj operasyonu uterusta kontraksiyon olması, kanama varlığı veya membranların rüptüre olması durumunda yapılmaz. <p dir=</p>
+<p>Serklaj yapılması için 12. gebelik haftası beklenir. Çünkü düşük şeklindeki gebelik kayıplarının büyük bölümü bu dönemden önce oluşur. Serklaj için ideal dönem ise 12-16. gebelik haftalardır. Gebeliğin en geç hangi haftasına kadar yapılabileceği konusunda fikir birliği yoktur. Ancak genellikle 24. gebelik haftasından sonra erken doğum riskini artırabileceğinden bu haftadan sonra fazla önerilmez. <p dir=</p>
+<p>Serklaj yapılmadan önce fetusun canlı olduğunun ve fetusta anomali olmadığının ultrasonla saptanması gereklidir. Belirgin servikal infeksiyonlar tedavi edilmeli, gerekli görüldüğü taktirde serviksten kültür alınmalıdır. Serklajdan en az bir hafta önce başlayarak bir hafta sonraki döneme kadar cinsel ilişki yasaklanmalıdır. Ayrıca bu gebelerde fiziksel aktivite kısıtlanmalıdır. <p dir=</p>
+<p>İkinci trimester sonlarına doğru servikal dilatasyon ve silinme oluştuktan sonra zaman zaman serklaj yapılabilmektedir. Bu işlem genelde acil veya kurtarma serklajı adını alır. Ancak bu işlem çoğunlukla beklendiği kadar yararlı olamamaktadır. <p dir=</p>
+<p>Serklaj ya basit şekilde dikiş atılan Mc Donald tekniği ile veya mesanenin alt kısmının serviksten ayrılması ile mesane altına atılan Shirodkar tekniği ile yapılabilir. Teknik ne olursa olsun serklaj başarılı olursa terme yakın dönemde serklaj ipi kesilerek normal doğum denenebilir veya sezaryen yapılacaksa serklaş ipi sazaryen sırasında da çıkartılabilir. <p dir=</p>` },
+"spina-bifida": { title: "Spina Bifida", content: `<h2>Tanım</h2>
+<p>Omurgadaki bir defektten omuriliği oluşturan sinirlerin kısmen veya tamamen dışarı çıkması durumudur. Genellikle bel (%73) ile kuyruksokumunda (%17) rastlanır. Buna karşılık sırtta (%9) ve boyunda (%1) görülme sıklığı daha azdır. Omurgadaki kemik defektinden omuriliğin dışarıya çıkıp çıkmamadığına veya hangi bölümlerinin dışarıya çıktığına göre değişik şekillerde adlandırılır. Omurgada sadece kemik defekti var, omurilikte bir değişiklik yok ve o bölgedeki deri sağlamsa bu durum Spina Bifida Occulta olarak adlandırılır. Kemikteki defektten meninks ve beyin-omurilik sıvısı dışarıya çıkmışsa Meningosel sözkonusudur. Myelomeningosel ise kanaldaki defektten meninksler kadar bütün nöral yapılarında dışarıda olduğu durum için kullanılan isimdir. Myelomeningosel en sık rastlanan şekildir ve nörolojik yetersizliklerle birliktedir. <p dir=</p>
+<p>Spina Bifida görülme sıklığı toplumdan topluma değişmekle birlikte 1/500 ile 1/2000 doğum olarak bildirilmiştir. Erkek fetuslarda dişi fetuslara göre biraz daha sık rastlanır. İlk trimesterdeki abortusların (düşüklerin) %3’ünde spina bifida tesbit edilmiştir. Spina bifidalı bebek doğuranlarda tekrarlama riski %2-%3’tür. Spina bifida olgularının %40’lık bölümünde ilave anomalilere rastlanır. İzole spina bifidalı (ilave anomali olmayan) olguların yaklaşık %10’luk bölümünde mental retardasyon (zeka geriliği) görülebilir. İzole olguların %4 sıklıkla kromozom anomalisi görülürken ilave anomalisi bulunan olgularda anormal kromozom ile karşılaşma oranı % 14 olarak bildirilmiştir. Kromozom anomalileri genellikle Trizomi-18, Trizomi-13, triploidi ve translokasyonlar şeklindedir. <p dir=</p>
+<p>Sebepleri: Spina bifidada sebep çoğunlukla belli değildir. Ancak gebelikte kulanılan bazı teratojen ajanların spina bifidaya yol açabileceği saptanmıştır. Bunlar valproik asit alınması, metotrexat ve aminopterin gibi folik asit antagonistlerin kullanılması, vitamin-a türevleri ve talidomid alınması, gebenin diabetik olması, gebeliğin ilk haftalarında 72 saatten uzun süren hipertermi (39 santigrat derecenin üstündeki sürekli ateş) ve folat yetersizliği gibi durumlar olarak belirtilebilir. Ayrıca ileri anne yaşı da (&gt; 35 yaş) risk artırıcı diğer bir faktördür. <p dir=</p>
+<img src="images/spina-bifida_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<img src="images/spina-bifida_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Klinik</h2>
+<p>Lezyonun büyüklüğü ve uzunluğu, etkilenen omurilik yapısı ve omurganın hangi bölümünde olduğuna göre spina bifidanın klinik önemi artar. Lezyon ne kadar büyükse ve sinir dokusu ne kadar etkilenmişse klinik tabloda o ölçüde ağır olur. Ayrıca lezyonun lokalizasyonu yani omurganın hangi seviyesinde olduğuda klinik tabloda çok önemlidir. Çünkü lezyonun altında kalan bölümlerde nörolojik problemler görülür. Bu nedenle lezyon omurganın ne kadar yukarısındaysa tablo da o ölçüde ağır olur. Yukarıya çıktıkça o seviyenin altında hissizlik, kollarda fonksiyon yokluğu, solunum kaslarının etkilenmesi vb birçok problemle karşılaşılabilir. Myelomeningoselde, lezyon omurganın aşağısında olsa bile hemen hemen her zaman ürogenital fonksiyon yetersizliği ve bacaklarla ilgili ortopedik sorunlara rastlanır. Bacaklardaki fonksiyon bozukluğuna ilave olarak sıklıkla ayaklarda şekil bozukluklarıda görülebilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Eğer açık defekt varsa gebe serumunda AFP artar. Yapılan tarama testlerinde Myelomeningosel olgularının yaklaşık %80’lik bölümünde AFP artışı görülür. Gebe serumundaki AFP artışı durumunda fetusun spinal kanalı (omurga ve omurilik) ultrason ile dikkatlice değerlendirilir. Meningosel ve meningomyelosel gibi spina bifidada olgularında sıklıkla kafa şekli ve beyinde anomaliler görülebilir. Bunlarda kafa kemiklerinde alın hizasında yanlar basıklaşmıştır. Üstten bakıldığında kafa limon şeklindedir. Beyinde de serebellum kıvrılarak muz şeklini alır. Ayrıca sisterna manga obliterasyonu çok yaygın bulgudur ve değişik derecelerde ventrikülomegali görülebilir. Fetusun kafa şekli ve beynindeki bu değişiklikler Arnold-Chiari tip 2 malformasyonu adını alır. Ultrason ile tanı genellikle 16-18. gebelik haftalarından sonra konabilir. Kafa şekli ve beyinde değişiklikleri oluşan olgularda tanı kolayca konabilir. Ancak Spina Bifida Occulta denilen durum olguların %15’lik bölümünü oluşturur ve omurgadan dışarıya taşan kese olmadığı için bunlarda tanı her zaman konamayabilir. Bu bölgedeki cilt yapısı normal olduğu için gebe serumunda AFP artışıda olmaz. MRI değerlendirmesi de tanı için gerekli olabilir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Spina bifidada prognoz lezyonun büyüklüğüne, uzunluğuna, yerine, ilave anomalilertin var olup olmamasına bağlıdır. Gebelik sırasında ölen fetus sayısı yüksektir. Canlı doğanların yaklaşık %20’lik bölümü 1 yıl içinde, %35’lik bölümü ise 5 yıl içinde ölmektedir. Yaşayanların yaklaşık %50’sinde IQ seviyesi 80’in altındadır. Hastaların %25’inde total felç görülür, ancak %25’lik bölümde bacak ve ayaklardaki sorunlar nisbeten önemsiz sayılabilir. Hasta bebeklerin uzun süreli takiplerinde sadece %17’lik bölümünde yeterli dışkı ve idrar fonksiyonunun gelişebildiği görülmüştür. Gebelik sırasında feusun prognozu hakkında fikir sahibi olmak mümkün değildir. <p dir=</p>
+<p>Gebenin takibi ve Doğum: Spina bifida tanısı konduğunda kromozom analizi gerekir. Bu amaçla gebelik haftasına göre amniosentez veya kordosentez yapılabilir. Kromozomların normal olması durumunda gebelik miada kadar devam etmelidir. Ancak hızla ilerleyen ciddi ventrikülomegali (fetal beyindeki sıvı dolaşımıonın olduğu ventriküllerin genişlemesi) ve makrokrania (fetus başının büyük olması) durumunda erken doğum planlanabilir. Önerilen doğum şekli sezaryen olmalıdır. Çünkü vaginal doğumda hem lezyon yerindeki kese içinde bulunan sinir dokusu hasar görebilir, hem de infeksiyon riski çok artabilir. Yurt dışında birkaç olguda gebelik sırasında cerrahi girişim yapılmıştır. Ancak bu operasyonun prematür doğumu artırdığı gibi felç ile idrar ve dışkı kontrolünde de olumlu yönde etkili olmadığı görülmüştür. <p dir=</p>
+<p>Korunma: Tekrarlama riskini azaltmak için gebelik planlamadan en az 2-3 ay önce başlamak üzere günlük 4 mg folik asit alınması önerilmektedir. Bu dozla gebeliğin 3 ay öncesinden başlamak üzere sürekli folik asit alınmasının spina bifida oluşmasını %71 oranında azalttığı bildirilmektedir. <p dir=</p>` },
+"tek-umblikal-arter": { title: "Tek Umblikal Arter", content: `<h2>Tanım</h2>
+<p>Umblikal kordon içindeki 2 arterden sağ veya soldakinin olmamasıdır. Normal umblikal kordon içinde 1 vena (toplardamar) ve 2 arter (atardamar) bulunur. Bu arterlerin biri mesanenin sağ, diğeri ise sol yanından gelerek kordon içine girip vena ile birlikte sarmal şekilde devam ederler. Tek umblikal arter anomalisinde ise 1 vena ve 1 arter vardır. Normal fetuslarda plasentaya olan kan akımı her iki areterden eşit miktarda olur. Tek arter olduğunda ise mevcut arter, olmayan diğer arterin dolaşım görevini de üstlenmiştir. <section id=</p>
+<img src="images/tek-umblikal-arter_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+
+<img src="images/tek-umblikal-arter_2.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Görülme sıklığı</h2>
+<p>Yenidoğan bebeklerde görülen umblikal kordona ait en yaygın anomalidir. Yapılan araştırmalarda tek umblikal arter’in görülme sıklığı; % 0.08 ile %1.9 gibi değişik değerlerde bildirilmiştir. Ortalama görülme sıklığı %0.63 olarak kabul edilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanıda en karakteristik bulgu; ultrasonografik değerlendirmede umblikal kordon kesitinde 2 damarın görülmesidir. Görüntülenecek umblikal kordon kesiti, kordonun plasentadan ayrılma yerinin en az 3 cm uzağında olmalıdır. Böylece zaman zaman kordona damarların girişi ile ilgili anomaliler dışlanır. Normalde geniş çaplı 1 vena ve daha dar çaplı 2 adet arter görülür. Tek umblikal arterde ise arterin çapı genişlemiştir. Normal kordon yapısındaki arterlerin her birinin çapı diğerine eşittir ve arter çapları vena çapının yarısından daha azdır. Oysa tek umlikal arter olgularında, arter çapı vana çapının yarısından daha büyüktür. Tek umblikal arterdeki bu kompensatuar genişleme, ikinci trimesterin erken dönemlerinden itibaren iyi bir ultrasonografi ile fark edilebilir. Tanıya yardımcı olan diğer bir bulgu ise fetal pelvisin transvers kesitinde renkli dopplerle mesanenin tek tarafından umblikal arter gelişinin görülmesidir. Oysa normal umblikal aretr yapısı olduğunda mesanenin iki tarafinda ayrı ayrı umblikal arterlerin görüntülenmesi mümkündür. Sol umblikal arter yokluğunun %70, sağ umblikal arter yokluğunun ise %30 sıklıkla görüldüğü bildirilmiştir. <p dir=</p>
+<p>Görüldüğü durumlar: Tek umblikal arter saptanan olgularda ilave anomalileri varlığı da arştırılmalıdır. Çünkü bu olgularda sıklıkla ilave anomalilere rastlanmaktadır. Bu anomalilerin en sık görülenleri; plasental yapı anomalileri, fetal santral sinir sistemi (SSS) anomalileri, yüz anomalileri, ekstremite anomalileri, kalp anomalileri, böbrak anomalileri, Trizomi-13, Trizomi 18 ve kromozom anomalileridir. Tek umblikal arter varlığında ilave anomali olsun veya olmasın olguların yaklaşık %15-%20 sinde fetal büyüme-gelişme geriliği görülür. <p dir=</p>
+<p>İzole (ilave anomali bulunmayan) tek umblikal arter olgularında kromozomal anomali olması beklenmez. Bu nedenle izole olgularda karyotip tayini önerilmez. Buna karşılık tek umblikal arter görüldüğünde ilave yapısal anomalide varsa bu olguların yaklaşık %50’lik bölümünde özellikle Trizomi 13 ve Trizomi 18 başta olmak üzere kromozomal anomaliler görülebilir. Bu nedenle bu olgularda genetik değerlendirme gerekir. Bu amaçla amniosentez (AS) ile kromozomal analiz yapılması önerilir. Kordosentez (KS) yapmak kontrendike olmamakla birlikte çok önerilmemektedir. Çünkü vazospazm veya damarlarda tamponad olabileceğinden fetusun hayatı tehlikeye girebilir. Bu nedenle gebeliğin dönemi uygun olduğu taktirde AS ile karyotip tayini bu vakalarda daha uygun olur. <p dir=</p>
+<h2>Prognoz</h2>
+<p>İzole olgularda, prognoz genellikle iyidir. Bunların yaklaşık %15- %20’lik bölümünde fetal gelişme geriliği ortaya çıkabilir. Bu nedenle bu gebeliklerin sık aralıklarla kontrol edilmesi ve 3. trimesterin başından itibaren fetal takipte umblikal arter Doppler değerlendirilmesinin de ilave edilmesi gerekir. İzole olmayan tek umblikal arter olgularında ki prognoz ise ilave anomalinin ne olduğuna ve anomalinin derecesine bağlıdır. Ayrıca bu olgularda kromozom anomalisinin olup olmadığı da prognozun belirlenmesinde önemlidir. <p dir=</p>` },
+"ureterosel": { title: "Üreterosel", content: `<h2>Tanım</h2>
+<p>Ureter böbreklerdeki idrarı mesaneye taşıyan borucuktur. Ureterin mesaneye bağlanan alt uç kısmında mesane içine doğru oluşan kistik genişlemesi ureterosel adını alır. Genişleyen bölüm mesane içinde ayrı bir kistik oluşum gibi görülür. <p dir=</p>
+<p>Görülme sıklığı 1/5000 doğum olarak bildirilmiştir. Dişi fetuslarda erkek fetuslara göre yaklaşık 5 kat daha fazla rastlanır. <p dir=</p>
+<p>Basit, ektopik ve çekoureterosel olmak üzere değişik tipleri vardır. Basit tip genellikle fetusta görülemez. Normal ureterovesikal junctunda bulunur. Mesanenin trigon bölümünde lokalizedir. Ektopik tip hemen hemen daima böbrek duplikasyonu ile birlikte görülür. Ureter giriş yeri trigonun alt-orta kısmında lokalizedir. Ektopik ureter mesane dışına açılma potansiyeline de sahiptir. Direkt olarak perineye, uretraya açılabileceği gibi erkek fetuslarda epididim, seminal kesecik, dişi fetuslarda vagina, uterusa da açılabilir. Cecoureterosel ise ektopik ureterin en nadir şeklidir. Mesane çıkış obstrüksiyonuna neden olabilir. <p dir=</p>
+<p>Olguların yaklaşık %75’lik bölümünde renal duplikasyon (çift toplayıcı sistemli böbrek) görülür. Toplayıcı sistemin üst kutbu genellikle dilate (genişlemiş) görünüşlüdür. Böbreğin alt kubunda ise reflüden dolayı aralıklı dilatasyonlar (genişlemeler) görülebilir. Böbrekte yapısal anomalinin olmadığı basit ureterosel olgularında ise tek taraflı hidronefroz görülebilir. <p dir=</p>
+
+<img src="images/ureterosel_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Tanı</h2>
+<p>Ureterosel tanısı ultrasonografi ile konabilir. Ultrasonografik değerlendirmede mesane içinde ince duvarlı ikinci bir kistik oluşum göze çarpar. Eğer ureterosel ureter kanalını tıkamışsa hidroureter görülür. Hidroureterde sıvıyla dolu genişlemiş, büklümlü tüp şeklinde ureter görülür. Eğer ureterosel genişse karşı taraf böbrek değerlendirilmelidir. Ureter genişlemişse böbrek pelvisi ile bağlantılı görüntü oluşur. Peristaltizm görülebilir. Dilate ureter barsaktan farklı olarak omurgaya dokunabilir. Renal duplikasyon varsa hem alt hemde üst ureterde genişleme görülebilir. Hidronefroz gelişebilir. Ureterosel mesane çıkışında tıkanmaya yol açarsa oligohidramnios (amniotik sıvının normalden az olması) gelişebilir. <p dir=</p>
+<p>Ureterosel tanısı konduğunda, mesanede oluşan başka bir kitleden, sigmoid kolonda oluşan kitleden, vesikoureteral reflüden, konjenital megaureterden, UPJ obstrüksiyonundan ve mesanede “Hutch” divertikülünden ayırıcı tanısının yapılması gerekir. Bunların büyük bölümünde ureterle ilişki yoktur. Bir bölümü solid olabilir. Mesanenin dışına doğru gelişim gösterebilirler. Vesikoureteral reflü ve konjenital megaureterde mesane normal görünümde olabilir. <p dir=</p>
+<p>Genel özellikleri: Sporadik (tesadüfi) görülür. Ureterin mesaneyle bağlantılı alt ucunda daralma vardır. Mesane duvarının kas ve mukozası arasında ureterin lümeninin genişlemesi sözkonusudur. Renal duplikasyon ile birlikte olduğunda dişi fetuslarda olguların %50’sinde jinekolojik anomalilere rastlanabilir. Ayrıca diğer böbrekte duplikasyon olma ihtimali de %10-20’dir. Ureterosel varlığında doğum sonrası bebeklikte hematuri, infeksiyon, hidronefroz ve idrar retansiyonu sıklıkla görülür. Mesane dışına ureter insersiyonu erkek çocuklarda epididim veya skrotuma olur ve bunlara ait şikayetler ortaya çıkar. Dişi fetuslarda ise mesane dışına insersiyon olduğunda idrar kontrolü yapılamaz ve sürekli idrar kaçağı görülür. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Ureteroselde prognoz genellikle obstrüksiyonun (idrar akışının engellenmesi) derecesine bağlıdır. Obstrüksion veya reflü yoksa prognoz iyidir. Böbrek fonksiyonlarının iyi olduğu izole (başka anomalinin olmaması durumu) ureterosel vakalarında cerrahi düzeltme operasyonu ile tam iyileşme görülebilir. Buna karşılık reflü ve/veya obstrüksiyon varsa prognoz bunların derecesine göre değişir. <p dir=</p>
+<h2>Tedavi</h2>
+<p>Gebelikte genellikle tedavi yapılmaz. Ancak mesane çıkış obstrüksiyonunun ileri boyutta olduğu oligohidramniosta mesaneye şant konması denenebilir. <p dir=</p>
+<p>Doğum sonrasında ise yenidoğan detaylı olarak değerlendirilir ve gereken tedavi yapılabilir. Burada öncelikle ultrasonografik olarak mesane ve böbreklere bakılır. Daha sonra voiding sistouretrogam (VCUG) yapılır. Böylece mesanede dolum defektinin var olup olmadığı ve vesikoureteral reflü varlığı araştırılır. Genellikle ıntravenöz piyelograma gerek yoktur. Komplike duplikasyon vakalarında MRI değerlendirmede yardımcı olabilir. Böbrek foksiyonunu değerlendirmek amacı ile zaman zamanda Radionuclid renal scan gereli olabilir. Cerrahi tedavi seçeneği ureteroselin sonuçlarına bağlıdır. Burada özellikle infeksiyon veya obstrüksiyon varsa endoskopik olarak ureteroselin keseciğinin kesilmesi yararlı olabilir. Ureter cerrahi olarak normal lokalizasyonda yeni bir yerden mesane ile ağızlaştırılabilir. Böbrek duplikasyonu varlığında üst kutupta kötü böbrek fonksiyonu tesbiti edilmesi durumunda heminefroureterektomi (böbrek ve ureterin o bölümünün çıkartılması) yapılabilir. <p dir=</p>` },
+"uterin-arter-ve-doppler": { title: "Uterin Arter ve Doppler", content: `<p>Uterusun kanlanması: Uterusun kanlanması büyük ölçüde her iki taraftaki A. Uterina sağlar. Bunun yanında kanın hemodinamik açıdan küçük ve önemsiz bir kısmıda A. Ovarikalardan sağlanır. Arteria uterinalar her iki yandan isthmus hizasında myometriuma ulaşır. A. uterinalar myometrium içinde her 2 yanda 10-15 arkadian damara ayrılır Bunlar uterusun çevresini dairesel biçimde sarıp ön-orta hatta anastomoz yaparler. Sirküler olarak ilerleyen bu damarlardan radial damarlar derinlere ilerlemektedir. Radial damarlardan bazal endometriumu ve spiral arteriolleri besleyen bazal arterlar çıkmaktadır. Kan, helezonik kıvrımlı spiral arterlerden plasentaya ulaşmakta ve desidua bazalisin spiral arterlerinin geniş ağızlarından intervillöz alana akmaktadır. <p dir=</p>
+<p>Gebeliğin ilk yarısındaki masif perfüzyon artışının ilk koşulu spiral arteriollerdeki morfolojik değişikliklerdir. Trofoblastik hücrelerin spiral arteriollerin muskuloelastik katmanlarına invazyonu sonucu bu arterler intervillöz alana ilerlerken huni şekilli geniş, esnek olmayan borular şeklinde dilate olarak işlev görürler. Bu değişiklikler postmenstruel 14-20 gebelik haftaları arasında oluşur. Gecikmiş olgunlaşmada en geç 24. gebelik haftasına kadar devam eder. <p dir=</p>
+<p>Gebelik süreci boyunca damar direnci Aa uterinadan spiral arterlere doğru artan gestasyonel yaşla birlikte azalır. Buna paralel olarak uterin kan akımı artar. Maksimum sistolik kan akımı Aa uterinalardan başlayarak Aa arkuata üzerinden radyal arterlere kadar bir düşme eğilimi gösterir. <p dir=</p>
+<p>Arterlerin Dilatasyonu: Arteria uterinanın orijinal çapı 3 katına, Aa.arkuatanın 10 katına, spiral arterlerinki ise 30 katına çıkmaktadır. Bu sayede gebeliğin son haftalarında intervillöz alanda yaklaşık 600 ml/dk’lık bir kan akımı gerçekleşir. Sistemik kan basıncı Aa. Arkuataya kadar devam etmekte, spiral arteriollerin başlangıcına kadar basınç azalması olmakta ve intervillöz alanda (15-20 ml’lik )küçük bir basınç farkının olduğu duruma gelinmektedir. Bu bilgilerden uterin damarlarda yapılan doppler sonografinin sadece Aa arkuatanın damar yatağı seviyesine kadar anlamlı sonuçlarının olacağı anlaşılmaktadır. <p dir=</p>
+<p>Plasentanın kanlanması: Her iki A.uterina arasındaki anastomozlardan dolayı plasenta her iki damar tarafındanda kanlanmaktadır. Plasentanın lokalizasyonuna göre her iki A.uterina farklı sayıda kotiledonun ana besleyicisi olur. Bu da doppler sırasında iki damar arasındaki farklılığın sebebini açıklar. <p dir=</p>
+<p>Normal ve sorunlu gebeliklerde perfüzyon: Normal gebeliklerde maternal damarlar için şu kural geçerlidir. Aa.uterina bütün plasental dolaşımın perfüzyonunu yansıtmaktadır. Terminal akım alanının aşırı büyüklüğü perifer damar direncinde düşmeye neden olmakta ve buda diastolik akım hızının artmasına yol açmaktadır. Bunun nedeni diğer eymenlerin yanında progesteron etkisiyle vazodilatasyon ve intervillöz alanın oluşmasıdır. <p dir=</p>
+<p>Hipertansiyon, preeklampsi vb patolojik bir gebelik seyrinde uterin dolaşımda vazokonstrüksiyon nedeniyle yüksek S/D oranı saptanabilmekte veya kollaterallerin oluşumu yetersiz kalabilmektedir (patolojik taraflar arasındaki farklılık). Notch (postsistolik çentik) fizyolojik olarak en fazla 24. gebelik haftasına kadar gösterilebilmektedir. Bir gebelik komplikasyonunun ortaya çıkası söz konusu olduğunda, bu notch persiste kalmaktadır. Üçüncü trimester için normal değerler şunlardır: <p dir=</p>
+<p>Erken Gebelik: Uterusun kanlanması embriyonel taslağın büyüklüğü ile ilişkilidir. Dokuzuncu gebelik haftasına kadar uterusun kanlanması lineer bir artış gösterir daha sonra büyük bir hızla geometrik artış yapar. <p dir=</p>
+<p>Erken gebelikteki fizyolojik değişiklikler trofoblast invazyonu ve damar lümeninde ki büyüme sonucu esas olarak uterin damarlarda olmaktadır. İlk trimesterde trans abdominal yolla kan akım hızlarının ölçümü transvaginal yola göre daha zordur. Vaginal yolla ölçümde damarlara anatomik yakınlıktan dolayı ölçüm daha kolay olmaktadır. <p dir=</p>
+<p>Uterin arter doppler sonografisi, uterin perfüzyon hakkında genel bir değerlendirme imkanı verir. Çünkü Aa uterinalar, bütün A.arkuataların kan akım şartlarını yansıtmaktadır. Bu özellikle plasentanın geniş infarktlarının olduğu ve /veya sigara içen gebelerde faydalı olmaktadır. Plasental yatağın tek bir alanda yapılan doppler incelemeleri bazı koşullarda yanlış sonuçlar verebilir. <p dir=</p>
+<p>İleri gebelik dönemleri: Uterin arter doppler ölçümü daha ziyade spiral arterlere yetersiz veya bozulmuş trofoblastik invazyondaki değişiklikleri yansıtmaktadır. Gebeliğin son dönemindeki fetal durumun veya riskin değerlendirilmesinde kardiotokografi daha gerçekçi ve faydalı bir yöntemdir. <p dir=</p>
+<p>Normal gebeliklerde gebeliğin başlangıcında yüksek sistolik ve düşük diastolik akım hızları ile ilişkili olarak, yüksek bir S/D oranı ve yüksekbir PI oranı saptanmaktadır. Gebelik yaşının ilerlemesiyle birlikte diastolik kan akım hızı artmakta ve bu da S/D oranı ile PI ‘de düşmeye neden olmaktadır. <p dir=</p>
+<p>Uterin arter doppler spektrumu, erken gebelikten gebeliğin 2. trimesterindeki tamamlanmış trofoblast invazyonuna kadar karakteristik değişiklikler göstermektedir. <p dir=</p>
+<p>Erken gebelikte akım spektrumu: Değişiklik göstermekle birlikte genelde sivri uçlu, ince sistolik tepeli ve dik bir sistolik yükselme ve düşme saptanmaktadır. Sistolik düşme bir notch gösterebilir. Dik düşen sistol 1. trimester sonunda ilk haftalarda bir erken diastolik notch ile sonuçlanır. Frekans derinliği, 1. trimesterdeki kalp siklusunun diastolik fazında en yüksek hızları gösteren bir diastolik tepe tarafından izlenir. Enddiastolik frekans kayması 1. trimesterde zayıftır. Ender olarak sıfır veya negatif akım bulunur. Erken gebelikte saptanan bu normal karakteristikler, ileri gebelik haftalarında ki patolojilerinde doppler spektrumundaki patolojileri yorumlamada fayda sağlamaktadır. <p dir=</p>
+<p>Birinci trimesterden sonraki değişiklikler: Sistolik tepe genişler, sistolik maksimum artmaya devam eder ve sistol kesintisiz biçimde erken diastolik çentiğe ulaşır. Erken diastolik notch’u takiben yüksek diastolik frekans kayması ortaya çıkar. Hızların artması sistole oranla enddiastolde daha fazladır. Sistolün düşen ayağı ile diastoldeki maksimal frekansların eğrisi arasındaki açı büyüyerek, eğrinin genel olarak düzleşmesine neden olmaktadır. Tariflenen bu gelişim genel olarak 20, en geç olarakta 24. gebelik haftasında tamamlanır. <p dir=</p>
+<p>Birinci trimesterde normal, gecikmeli veya sorunlu perfüzyonun ayırt edilmesi mümkün değildir. Daha sonra 13-15 ve 16-18 gebelik haftalar arasındaki anlamlı fark, 2. trimester başlangıcındaki logaritmik direnç azalmasını gösterir. Bu durum spiral arteriollerin intervillöz alana açılmasından sonraki uterin perfüzyon artışının göstergesidir. <p dir=</p>
+<p>Sekonder trofoblast invazyonu: Sekonder trofoblast invazyonu, uteroplasental kanlanmanın oluşumunun kesin bir göstergesidir. Bu dönemdeki karakteristik doppler değişiklikleri esas olarak diastolik olmak üzere, bütün kalp siklusunda maksimal akım hızlarının artması ve erken diastolik frekans kaybının düzleşmesi veya yok olmasıdır (16-18. gebelik haftalarının ortasında başlayabilir). Buradaki en önemli özellik, uterin kanlanmanın patolojik nitelik kazandığı hiçbir olgunun normal kanlanma özellikleri göstermemesidir. Oysa patolojik doppler özelliği gösteren olguların 24. haftaya kadar düzelmesi ve normal doppler özelliği göstermesi beklenebilir. Bunlarda geciken ancak normal seyreden trofoblast invazyonu ve plasental olgunlaşma söz konusudur. <p dir=</p>
+<p>Uterin arter doppler bulgusu gebelik yaşı ile birlikte plasentanın lokalizasyonuna gere de değişmektedir. Lateral yerleşmiş plasenta varlığında, ipsilateral a. Uterina kan akım değişimleri sergilediğinden klinik değerlendirmede ön planda tutulmalıdır. Sağ-sol ölçüm farklılıkları özellikle erken gebelikte belirgindir. Gebelik haftası ilerledikçe iki arter S/D arasındaki fark azalmakta ve ortalama 0.3-0.4’e gerilemektedir. <p dir=</p>
+<p>Fetal gelişme geriliği ve /veya gestasyonel hipertansiyon: Uterin arterdeki patolojik doppler bulguları var olan (- gelişmekte olan) IUGG veya preeklampsi ile birliktelik gösterir. Normal perfüzyon bulgularına göre, A.uterinaların patolojik PI değerleri prematür doğum ve düşük doğum ağırlığı ile anlamlı derecede ilişkilidir. <p dir=</p>
+<p>Ancak uterin arterdeki patolojik doppler bulgusu kromozomal ve/veya anatomik fetal anomalilerin varlığında da görülebilir. Bunun nedeni gecikmiş veya durmuş neovaskülarizasyon zemininde plasental azalmış vaskülarizasyondur. <p dir=</p>
+<p>Bir tane patolojik perfüzyon parametresinin varlığı: Patolojik uterin perfüzyonun en hafif biçimi sadece bir patolojik bulgu (ör: tek taraflı S/D oranı veya sol-sağ farkı) olduğunda söz konusudur. Hemodinamik olarak bu bulgu şu şekilde yorumlanabilir: Sadece bir taraftaki uterin arter uygun olarak genişlemiş ve düşük rezistanslı ve yüksek diastolik akımlı damara dönüşmüştür. Diğer taraftaki damar bu değişiklikleri gösterememiş veya uygun kolleteraller oluşmamıştır. Bu şekildeki patoloji, fetal dolaşımı çok az engeller gibi görülmektedir. Bu ve benzeri düşük uterin perfüzyonlar büyük ölçüde fetal kardiovasküler kompansasyon mekanizmalarınca dengelenebilir. <p dir=</p>
+<p>İki veya üç tane patolojik perfüzyon parametresinin varlığı: Uterin perfüzyonun 2 veya 3 parametresinin patolojik olduğu vakalar (bir veya iki uterin arterde yüksek S/D oranına eşlik eden/etmeyen sağ-sol farkı), uterin perfüzyonun ağır bir patolojik biçimi olarak kabul edilmiştir. İki veya üç tane patolojik parametreli uterin perfüzyonun fetusları önemli ölçüde etkilemeleri beklenmelidir. Bu nedenle uterin perfüzyonun klinik değerlendirilmesi için her iki uterin arterin kan akım hızının ölçülmesi gereklidir. <p dir=</p>
+<p>Notch: Uteroplasental akım eğrileri içindeki postsistolik çentik (notch), gebeliğin ikinci yarısında, muhtemelen plasentasyon sırasındaki hatalı, yetersiz trofoblast invazyonu nedeniyle spiral arterler alanındaki bir patolojiye işaret eder. Bir notchun ortaya çıkması, preeklampside tipik bir doppler sonografi işaretidir ve anlamlı derecede intrauterin gelişme geriliği ile bağlantılıdır. Bir notch 24. gebelik haftasından sonra görülmemelidir. Aksi taktirde kromozomal veya anatomik fetal anomalisi bulunmayan gebeliklerde %70 sensivite ile HT özellikli komplikasyonun ortaya çıkma olasılığı var demektir. <p dir=</p>
+<p>Geç ortaya çıkan HT için sensivite: Her 2 uterin arterin dahil edilmesi ve rezistans endeksinin değerlendirilmesiyle, daha 22. gebelik haftasında herhangi bir gebelik komplikasyonuna yönelik uterin damarlarda doppler ölçümü yardımıyla tarama yapılabilir. Valensise’nin incelemesinde bu tipteki bir taramanın ileri gebelik dönemi hipertansiyonuna ait prediktif sensivitesi %50, preeklampsi için %88, ve intrauterin gelişme geriliği için %100 olarak bildirilmiştir. <p dir=</p>
+<p>Negatif prediktif değer: Patolojik bir bulgu, daha 24. gebelik haftasından itibaren klinik sonuçlar ortaya çıkarabilir. Bu metodun negatif prediktif değeri şu bakımdan etkileyicidir.: Normal bir bulguda %96 olasılıkla herhangi bir gebelik komplikasyonunun ortaya çıkmayacağı kabul edilebilir. Bu gibi durumlarda yaklaşık 4 hafta aralıklarla yapılan kontroller yeterli olmaktadır. Ancak burada gebeliğe ait bütün komplikasyonların tanısı ve prognoz tayinlerinin doppler ölçümleriyle yapılamayacağının da bilinmesi gerekir. Bu metod özellikle gestasyonel HT ve IUGG’de önem kazanır. Yani anamnezde bu yönde bir risk varsa bu inceleme yapılmalıdır. <p dir=</p>
+<p>Azalmış uterin perfüzyonda yaklaşım: Anomali olasılığı ortadan kaldırıldıktan sonra profilaktik olarak erken dilüsyon veya asetil salisilik asidin verilmesi söz konusu olabilir. Ancak bu girişimin yararlı olup olmadığı henüz bilimsel olarak kanıtlanmamıştır. <p dir=</p>
+<p>Ondokuzuncu-yirminci gebelik haftalarında patolojik doppler bulgusu elde edilince aşağıdaki uygulama tavsiye edilebilir: <p dir=</p>
+<p>-Kontrollü şekilde asetil salisilik asit, hemodilüsyon, nitrik oksit ile tedavi, <p dir=</p>
+<p>-Yirmidördüncü gebelik haftasında doppler kontrolü, patolojik doppler bulgularının devamı halinde tedavinin sürdürülmesi ve sık gebelik kontrolü. <p dir=</p>
+<p>-Uterin arter doppleri, uterin terminal akım alanının düşük dirençli damar bölgesine dönüşmesi ve indirekt olarak özellikle spiral arterioller alanındaki morfolojik değişimlerin normal olup olmadığını gösterebilir. <p dir=</p>
+<p>- Doppler sonogramın karakteristik değişiklikleri, kalp siklusunun diastolik fazında sistole kıyasla daha belirgin frekans kaymalarının olması şeklindedir. Bu, gebeliğin ortasına kadar endeks değerinin düşmesini ve erken diastolik frekans kaybının (çentiklenme) ortadan kalkmasını sağlamaktadır. (16-18 gebelik haftalarının ortasından itibaren) <p dir=</p>
+<p>-Doppler sonografinin tanısal değeri gebelik haftasının ilerlemesi ile artmakta ve 20-24. gebelik haftalarında en üst düzeye erişmektedir. <p dir=</p>
+<p>-Gebeliğin 24. haftasına kadar diastolik notch, fizyolojik olarak değerlendirilir. Bunun immatür uteroplasental damar yatağına bağlı olarak görülebildiği kabul edilir. <p dir=</p>
+<p>-Yirmidördüncü haftadan sonra notch görülmeye devam ederse, bu patognomonik olarak preeklampsi gelişimi başlangıcı olarak kabul edilebilir. <p dir=</p>
+<p>-Bu dönemden sonra elde edilen patolojik doppler bulguları ile gebeliğin devamında ortaya çıkacak preklampsi ve/veya uteroplasental yetmezlik açısından belirgin bir korelasyon vardır. <p dir=</p>` },
+"yarik-dudak-yarik-damak": { title: "Yarık Dudak, Yarık Damak", content: `<h2>Tanım</h2>
+<p>Fetal dudakta ve/veya damakta yarılma şeklinde defekt olmasıdır. Sadece dudakta veya sadece damakta olabileceği gibi genellikle her ikisinde birlikte görülebilir. Yarık şeklindeki defekt dudak veya damakta değişik lokalizasyonlarda bulunabilir. Örneğin sadece dudakta olan tek taraflı yarık Tip: 1 olarak adlandırılır. Tek tarflı, dudak ve damakta birlikte defekt olması hali Tip: 2 olarak isimlendirilir. Tip:3’te iki taraflı damak ve dudak defekti vardır. Tip:4 ise orta hatta ki damak ve dudak yarığının birlikte bulunması durumuna verilen isimdir. <p dir=</p>
+<p>Bunlarda Tip:1 nadiren görülür. Tip: 2’nin görülme sıklığı %15-%20, Tip:3’ün görülme sıklığı %25-%30, Tip: 4’ün görülme sıklığı ise %45-%55 arasında değişir. Tip:3 ile Tip:4’te kromozomal anomali ve sendrom riski çok fazladır. Holoprosensefali, Trizomi:13, Trizomi:18 ve bazı sendromlar sıklıkla dudak-damak defektine eşlik ederler. Ayrıca fetusun bütün organlarına ait patolojilere sıklıkla rastlanabilir. Tanı konan olgularda amniosentez veya kordosentez yapılarak kromozomların değerlendirilmesi gerekli olabilir. <p dir=</p>
+<p>Damak dudak yarığının görülme sıklığı toplumlara göre değişiklik gösterebilir. Örneğin Amerikadaki Hindularda 1/300, Asyalılarda 1/600 sıklıkla görülürken Afrikalı ve Amerikalı siyaklarda görülme sıklığının 1/2500 doğum olduğu bildirilmiştir. Kabaca görülme sıklığı 1/0,15 doğum olarak bildirilmiştir. Ancak bütün konjenital anomaliler dikkate alındığında görülme sıklığının %7,5 olduğu belirtilmiştir. <p dir=</p>
+<p>Dudak damak yarığının sebebi belli değildir. Ancak gebeliğin ilk aylarında kızamıkçık gibi infeksiyon geçirenlerde, retinoik asit, valproik asit, hidantoin gibi ilaç kullananlarda ve alkol ile sigara kullananların gebeliklerinde bu ve benzeri anomalilere daha fazla raslandığı bilinmektedir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Damak ve dudakların ultrasonografik değerlendirilmesi ile tanı konabilir. Tanı konan olgularda mutlaka fetal ekokardiografiyi de içeren detaylı ultrasonografik değerlendirme yapmak gerekir. Çünkü bu olguların büyük çoğunluğunda diğer sistemlere ait anomalilerde birlikte bulunur. <p dir=</p>
+<p>Dudak damak yarığı varlığında ultrasonografide tanı konan diğer bir patolojide polihidramniostur (amniotik sıvının normalden fazla olması durumu). Çünkü dudak ve damak yarığı olan olgularda amniotik sıvının yeterince yutulamamasına bağlı olarak genellikle amniotik sıvı miktarında artış olur. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Prognoz ilave anomalilerin var olup olmamasına ve varsa bu anomalilerin ne olduğuna bağlıdır. İlave anomali olmayan dudak damak yarığı olgularında prognoz genellikle iyidir. Dudak ve damaktaki defek cerrahi girişim ile giderilmeye çalışılır. Ağız ve yüzdeki bu problemden dolayı bebeğin beslenmesi güç olur. Ayrıca duyma ve konuşma ile ilgili sorunlarla karşılaşılabilir. <p dir=</p>
+<p>Dudak lezyonlarında cerrahi tedaviye başlamak için ideal dönem doğumdan 2-3 ay sonradır. Damak yarığı ise doğumdan 9-18 ay sonra ameliyat edilebilir. Ancak bebeğin durumunun gereklilik ortaya çıkardığı ciddi vakalarda doğumdan hemen sonra ameliyat edilmesi de mümkün olabilir. Erişkin döneme kadar bazı vakalarda birkaç kez ameliyatın gerekli olabileceği de unutulmamalıdır. <p dir=</p>
+<p>Damak dudak yarığının birlikte olduğu ciddi vakalarda sadece plastik cerrahi ile düzeltme operasyonu yeterli olmayabilir. Bunlarda kulak-burun-boğaz cerrahisi, diş tedavisi, duyma ve konuşma eğitimi ile sosyal ve psikolojik eğitim gerekli olabilir. <p dir=</p>
+<p>Dudak damak yarığının tekrarlama riski fazla değildir. Eğer anne veya babadan birinde damak dudak yarığı var ise tekrarlama rsiki %3-%5 olarak bildirilmiştir. Anne ve babanın her ikisinde de dudak damak yarığı var ise tekrarlama riskinin %14-%17 olduğu belirtilmiştir. <p dir=</p>` },
+"ozofagus-artezisi": { title: "Özofagus Atrezisi", content: `<h2>Tanım</h2>
+<p>Özofagus (yemek borusu) yutakla mide arasında geçişi sağlayan organdır. Özofagus atrezisi, özofagusun bir bölümünün oluşmamasıdır. Özofagusun normal oluşmaması sonucu yutak ile mide arasında geçiş olmaz. Özofagusun oluşmayan yerleri kör boşluk şeklindedir. <p dir=</p>
+<p>Özofagus atrezilerinin %90’ından fazlasında özofagus ile trakea (nefes borusu) arasında fistül (oluşan bir delik yoluyla geçiş olması) görülür. Bu fistüllerin büyük bölümü (%80’den fazlası) özofagusun mide tarafında kalan alt bölümü ile trakea arasında oluşur. Böyle durumlarda ağız boşluğu ile mide arasında trakea aracılığıyla geçiş oluşur. <p dir=</p>
+<p>Özofagus atrezisinin görülme sıklığı 1/2000-1/3000 doğumdur. Erkek fetuslarla dişi fetuslarda görülme sıklığı eşittir. Olguların %60’ında ilave anomaliler görülebilir. En sık görülen ek anomaliler kalp (%25), ürogenital sistem (%15), iskelet sistemi (%14), ince barsak atrezileri ve diğer sistemlerle ilgili anomalilerdir. Ayrıca başta trizomi-21 ve trizomi-18 olmak üzere kromozomal anomalilerde daha sık görülebilir. Değişik çalışmalarda kromozom anomalisi görülme sıklığı %5 ile %44 arasında bildirilmiştir. Olguların %10’luk bölününde <span class=</p>
+<p>Ayrıca özofagus atrezisi vakalarının yaklaşık %40’ında fetal gelişme geriliği görülebilir. Sebebi bilinmemekle birlikte özofagus atrezilerine retinoik asit ve alkol kullanan kadınların gebeliklerinde daha fazla rastlanabilir. <p dir=</p>
+<h2>Tanı</h2>
+<p>Tanı ultrasonografi ile konabilir. Ultrasonografide midenin görülmemesi akla öncelikle özofagus atrezisini getirir. Ancak özofagus atrezilerinin büyük bölümünde trakea ile özofagusun mide tarafındaki alt bölümü arasında fistül olduğundan midede sıvı görülebilir. Ayrıca trakea yoluyla sıvı geçişi olmasa bile midenin kendi sıvılarıda mideyi bazen görünür yapabilir ancak bu durumda mide çok daha küçük görünür. <p dir=</p>
+<p>Mide görüntüsünün dışında amniotik sıvının artması olan polihidramniosta özofagus atrezisini akla getirebilir. Ancak gebeliğin ikinci yarısından önce genellikle polihidramniosun oluşamayacağıda bilinmelidir. Plasentada değişiklik görülmez. Kromozom anomalisi ve VACTERL anomalileri olmadıkça fetusun büyümesi de genellikle sorunsuzdur. Genellikle 24. gebelik haftasından sonra tanı konabilir. <p dir=</p>
+<p>Zaman zaman yanlış tanı konmasıda sözkonusu olabilir. Çünkü bazen normal fetuslarda da mide görülemeyebilir veya obesite gibi sebeplerle midenin görülmesi güç olabilir. Ayrıca başka bir nedenle yutmanın olmadığı veya olamadığı durumlarda da mide küçük görülebilir. Bu durumlarda yanlış özofagus atrezisi tanısı konabilir. Buna karşılık trakea ile alt özofagus arsındaki fistüllerde mide görünümü ve amniotik sıvı miktarı normal olabilir. Bu durumda da özofagus tanısı konamayabilir. <p dir=</p>
+<p>Özofagus atrezisi tanısı koyarken midenin tamamının veya bir bölümünün göğüs boşluğunda olduğu diafragma hernisi, hiatal herni veya santral sinir sistemi malformasyonları, kas-sinir sistemi hastalıkları ve dudak-damak yarığı gibi sıvı yutmanın yeterince olmadığı durumlarla ayırıcı tanının yapılması gerekir. <p dir=</p>
+<p>Gebenin izlenmesi: Kromozom anomalilerinin sık görülmesi nedeniyle bütün gebelerde amniosentez veya kordosentez ile karyotip önerilir. Ek anomaliler açısından 2. düzey fetal ultrasonografi ile birlikte fetal ekokardiografi yapılmalıdır. Erken doğum yapma olasılığı yüksek olduğu için yenidoğan uzmanı pediatrist ile pediatrik cerrahi konsultasyonu gebenin takibine ilave edilmelidir. <p dir=</p>
+<p>Fetusun akciğer olgunlaşmasını hızlandırmak için steroid uygulanabilir. Ayrıca polihidramnios varlığında zaman zaman amniotik sıvıyı azaltma girişimleride hem gebeyi rahatlatma açısından hem de erken doğum riskini azaltmak yönünden yararlı olabilir. Erken doğum travayı başlarsa tokoliz yaparak doğumu durdurmaya ve dolayısıyla gebeliği uzatmaya çalışmak yararlı olabilir. <p dir=</p>
+<p>Doğum mutlaka yenidoğan yoğun bakım imkanı olan ve acil yenidoğan cerrahisinin yapılmasına uygun olan merkezlerde yapılmalıdır. <p dir=</p>
+<p>Doğum: Doğum için ideal dönem gebeliğin term olduğu yani 40. gebelik haftasına ulaştığı dönemdir. Ancak polihidramnios nedeniyle erken doğumların sık görüldüğü unutulmamalıdır. Doğum şekli obstetrik indikasyonlara göre seçilir. Yani başka bir neden varsa sezaryen önerilebilir. <p dir=</p>
+<h2>Prognoz</h2>
+<p>Gebelikte tanı konan özofagus atrezilerinde fetal ölüm oranı değişik çalışmalarda % 22 ila %75 arasında bildirilmiştir. Canlı doğanlar arasında yenidoğanın hayatta kalmasında en büyük etki özellikle kalp defektleri olmak üzere ilave anomalilerin var olup olmamasıdır. <p dir=</p>
+<p>İzole (ek anomali olmayan) özofagus atrezilerde sağkalım oranı çok daha yüksektir. Ancak bu bebekler ameliyatı takiben hayatlarının sonraki döneminde özofagus motilite bozukluğu, aspirasyon, striktür, tekrarlayan trakeoözofagus fistülü beslenme güçlüğü gibi değişik sorunlarla karşılaşabilirler. <p dir=</p>
+<p>Tek başına özofagus atrezisi olan olguların operatif düzeltilmesi, trakeoözofageal fistülü olanlara göre teknik olarak daha zordur. <p dir=</p>` },
+"amniosentez": {
+  title: "Amniosentez",
+  content: `
+<h2>Tanım</h2>
+<p>Amniosentez, fetusun etrafındaki amnios sıvısından özel iğneler ile bir miktar alınmasıdır. En fazla yapılma nedeni prenatal tanıdır. Prenatal tanı amaçlı amniosentez gebeliğin 15-20 haftaları arasında yapılabilir. İdeal dönem 16-20. gebelik haftalarıdır.</p>
+<h2>Teknik</h2>
+<p>Amniosentez yapmak için 20 veya 22 numara spinal iğneler kullanılır. Steril şartlar altında, ultrasonografi klavuzluğunda intrauterin boşluğa girilir. Önce 1-2 ml'lik sıvı çekilir ve atılır. Daha sonra genellikle 18-20 cc sıvı test için alınır.</p>
+<h2>Komplikasyonlar</h2>
+<p>Amniosentez sonrası fetal kayıp oranı değişik çalışmalarda 1/200 ile 1/300 arasında bildirilmiştir. Küçük komplikasyonlar görülme sıklığı %1'den daha azdır. İntrauterin infeksiyon (koryoamnionit) görülme sıklığı 1/1000'den azdır.</p>
+<h2>Erken Amniosentez</h2>
+<p>Amniosentezin gebeliğin 11-14. haftaları arasında yapılmasıdır. Erken amniosentezde fetal kayıp ve diğer komplikasyonların daha fazla olduğu bilinmektedir. Bu nedenle bu dönemde prenatal tanı gerektiğinde koryon villus biopsisi (CVS) tercih edilmektedir.</p>
+`},
+"kordosentez": { title: "Kordosentez (KS)", content: `<h2>Tanım</h2>
+<p>Kısaca kordosentez olarak adlandırılan perkütan umblikal kan örneklemesi genellikle fetal kanda alyuvar hücre veya trombosit alloimmunizasyonunda tanı ve tedavisi amacıyla yada nonimmun hidropsun değerlendirilmesinde kullanılır. Kordosentez ayrıca CVS veya amniosentez sonuçlarının şüpheli olduğu durumlarda tanıyı doğrulamak amacı ile yapılabilir. Zaman zaman gebe yirmili haftalar gibi geç dönemde başvurabilir. Bu ve benzeri durumlarda genetik tanı için hızlı sonuç alınmasının gerekli olduğu durumlarda da kordosentez yapılabilir. Gebeliğin ilerleyen dönemlerinde fetal anomali veya ciddi gelişme geriliği görülürse ve bu durumda da fetal tanı eğer gebeliğin takibini ve doğum şeklini etkileyecekse da oordosentez yapılabilir. Kordosentez ile alınan fetal kandan genetik testlerin dışında metabolik, hemalotik testler, asit-baz analizi, viral kültürler ve immunolojik çalışmalar yapılabilir. <p dir=</p>
+<h2>Teknik</h2>
+<p>Kordon damarlarının genişlemesinden dolayı 21. gebelik haftasından sonra kordosentezin yapılması teknik olarak daha uygundur. Ultrasonografi klavuzluğunda gebenin karın duvarından uygulama yapılır. Plasentanın bulunduğu yere göre uygun girişim yeri tesbit edilir. Cilt temizliğini takiben cilt-ciltaltına lokal anestezi uygulanır. Daha sonra uygun kordosentez iğnesi ile girişime başlanır. Plasentanın yeri uygunsa, plasentanın içinden geçerek kordonun çıkış yerinden kordon damarlarına girilir. Böylece kordonun kese içinde sağa-sola kaçışı engellenmiş olur. Eğer plasenta arka duvarda ise bu teknikle kordona ulaşmak mümkün olamayacağından amniotik sıvı içinde serbest halde bulunan kordondan örnek alınması gerekebilir. Bu işlem teknik olarak daha zordur. <p dir=</p>
+
+<img src="images/kordosentez_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+<h2>Komplikasyonlar</h2>
+<p>Komplikasyonlar genel olarak amniosentezdeki gibi fetal ölüm, abortus veya erken doğum, amnios sıvısının gelmesi ve infeksiyondur. Ayrıca kordondan kanama veya kordonda hematom, fetustan anneye kan geçişi ve fetusta kalp atımı yavaşlaması gibi komplikasyonlara da kordosentezde rastlanabilir. <p dir=</p>` },
+"koryon-villus-biopsisi": { title: "Koryon Villus Biopsisi (CVS)", content: `<h2>Tanım</h2>
+<p>Plasental villüslerden prenatal tanı amacı ile örnek alınması işlemidir. Genellikle 10-13. gebelik haftalarında yapılır. Gebeliğin erken döneminde yapılabilir olması işlemin en önemli avantajıdır. Böylelikle hem gebe ve eşinin anksiyetesi azaltılır, hem de sonuç anormal olduğunda erken ve güvenilir yöntemlerle gebelik sonlandırılabilir. İndikasyonları Fragil X sendromu gibi birkaç istisna dışında ganallikle amniosentez indikasyonları ile aynıdır. <p dir=</p>
+<h2>Teknik</h2>
+<p>Koryonik villüsler transservikal (vagina ve rahim ağzından geçerek) veya transabdominal ( gebenin karın duvarından geçerek) yolla yapılabilir. Plasentanın yeri uygunsa transamniotik yaklaşım tercih edilir. Bu yöntemde karın duvarı cilt-ciltaltında lokal anestezi yapılır. Daha sora özel CVS iğnesi ile plasental alana girilir, iğne ileri-geri hareket ettirilir. İğneye uygulanan negatif basınçla koryonik villuslar özel medium içine çekilir ve laboratuara gönderilir. İşlemden sonra fetusun kalp atımları ve ciltte kontrolü yapılır. <p dir=</p>
+<img src="images/koryon-villus-biopsisi_1.jpg" alt="" style="max-width:100%;height:auto;display:block;margin:1.2rem auto;border-radius:6px;">
+
+<h2>Komplikasyonlar</h2>
+<p>Koyon villüs biopsisinin komplikasyonları amniosentez ile benzerdir. Bunlar fetal ölüm, infeksiyon, kanama, amnios sıvısının gelmesi ve düşükler olarak özetlenebilir. Bu komplikasyonların ortalama görülme sıklığının %1-%0.5 arasında olduğu bildirilmiştir. Ayrıca bazı yayınlarda CVS yapılan fetuslarda (özellikle 9. hafta gibi erken dönemlerde) el-kol ayak-bacak gibi ekstremite anomalilerinin görülebileceği bildirilmiştir. <p dir=</p>` }
+
+};
+
+// ─── All topics list ────────────────────────────────────────────────────────
+const allTopics = [
+  ["Akrania","akrania"],["Amniosentez","amniosentez"],["Anal Atrezi","anal-artezi"],
+  ["Asit","asit"],["Duodenal Atrezi","duodenal-artezi"],["Ektopik Böbrek","ektopik-bobrek"],
+  ["Fetal Anomaliler","fetal-anomaliler"],["Fetal Kalpte Hiperekojen Odak","fetal-kalpte-hiperekojen-odak"],
+  ["Gastroşizis","gastrosizis"],["Gebelik Kolestazı","gebelik-kolestazi"],
+  ["Gebelikte İlaç Kullanımı","gebelikte-ilac-kullanimi"],["Hafif Pelviektazi","hafif-pelviektazi"],
+  ["Hafif Ventrikülomegali","hafif-ventrikulomegali"],["Hidronefroz","hidronefroz"],
+  ["Hidrops","hidrops"],["Hidrosel","hidrosel"],["Hiperekojen Barsak","hiperekojen-barsak"],
+  ["Hipospadias","hipospadias"],["Karaciğerde Kalsifikasyon","karacigerde-kalsifikasyon"],
+  ["Kistik Adenomatoid Malformasyon","kistik-adenomatoid-malformasyon"],
+  ["Kistik Higroma","kistik-higroma"],["Kondiloma Akuminata","kondiloma-akuminata"],
+  ["Koroid Pleksus Kisti","koroid-pleksus-kisti"],["Kordosentez (KS)","kordosentez"],
+  ["Koryon Villus Biopsisi (CVS)","koryon-villus-biopsisi"],
+  ["Mega Sisterna Magna","mega-sisterna-magna"],["Mekonyum Peritonitis","mekonyum-peritonitis"],
+  ["Multikistik Displastik Böbrek","multkistik-displastik-bobrek"],["Myom","myom"],
+  ["Oligohidramnios","oligahidramnios"],["Omfalosel","omfalosel"],["Over Kisti","over-kisti"],
+  ["Plasenta Previa","plasenta-previa"],["Posterior Uretral Valv Sendromu","posterior-uretral-valv-sendromu"],
+  ["Renal Agenezi","renal-agenezi"],["Servikal Yetmezlik","servikal-yetmezlik"],
+  ["Spina Bifida","spina-bifida"],["Tek Umblikal Arter","tek-umblikal-arter"],
+  ["Üreterosel","ureterosel"],["Uterin Arter ve Doppler","uterin-arter-ve-doppler"],
+  ["Yarık Dudak, Yarık Damak","yarik-dudak-yarik-damak"],["Özofagus Atrezisi","ozofagus-artezisi"]
+];
+
+let currentArticleId = null;
+
+// ─── Build topics grid ───────────────────────────────────────────────────────
+(function(){
+  const grid = document.getElementById('topics-grid');
+  allTopics.forEach(([name, id]) => {
+    const card = document.createElement('div');
+    card.className = 'topic-card';
+    card.textContent = name;
+    card.onclick = () => showArticle(id);
+    grid.appendChild(card);
+  });
+})();
+
+// ─── Navigation ─────────────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (name === 'home') document.querySelector('.nav-link[onclick="showPage(\'home\')"]').classList.add('active');
+  if (name === 'contact') document.querySelector('.nav-link[onclick="showPage(\'contact\')"]').classList.add('active');
+  window.scrollTo(0,0);
+  closeSidebar();
+}
+
+function showArticle(id) {
+  const art = articles[id];
+  if (!art) return;
+  currentArticleId = id;
+
+  document.getElementById('article-title').textContent = art.title;
+  document.getElementById('article-body').innerHTML = art.content + 
+    `<div class="article-signature">— Prof. Dr. Alkan Yıldırım</div>
+     <button class="article-appt-btn" onclick="showPage('contact')">Randevu Almak İçin Tıklayınız</button>`;
+
+  // Prev/Next navigation
+  const idx = allTopics.findIndex(([,i]) => i === id);
+  const nav = document.getElementById('article-nav');
+  nav.innerHTML = '';
+  if (idx > 0) {
+    const [pName, pId] = allTopics[idx-1];
+    const btn = document.createElement('button');
+    btn.className = 'article-nav-btn';
+    btn.textContent = '← ' + pName;
+    btn.onclick = () => showArticle(pId);
+    nav.appendChild(btn);
+  }
+  if (idx < allTopics.length - 1) {
+    const [nName, nId] = allTopics[idx+1];
+    const btn = document.createElement('button');
+    btn.className = 'article-nav-btn';
+    btn.textContent = nName + ' →';
+    btn.onclick = () => showArticle(nId);
+    nav.appendChild(btn);
+  }
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-article').classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.toggle('active', l.getAttribute('onclick') === `showArticle('${id}')`);
+  });
+  window.scrollTo(0,0);
+  closeSidebar();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+}
+</script>
+</body>
+</html>
